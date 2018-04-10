@@ -1,0 +1,12 @@
+# config/app.yml for rails-settings-cached
+defaults: &defaults
+  app_name: "beautiful_baby"
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

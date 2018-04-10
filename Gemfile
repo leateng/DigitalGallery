@@ -32,8 +32,9 @@ gem 'bcrypt', '~> 3.1.7'
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
+
 # For bootstrap style
-gem 'bootstrap-sass', '3.2.0.0'
+gem 'bootstrap-sass', '3.3.6'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
@@ -53,7 +54,18 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'pry-rails'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# 程序配置项
+gem 'rails-settings-cached'
+
+# 权限控制
+gem 'cancancan'
+
+# 文件上传
+gem 'carrierwave'
+gem 'mini_magick'

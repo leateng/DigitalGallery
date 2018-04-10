@@ -1,0 +1,144 @@
+<% provide :title, @user.name %>
+
+<div class="row">
+  <div class="col-md-4 upload-sidebar">
+    <div id="fileuploader"></div>
+  </div>
+
+  <div class="col-md-8 col-md-offset-4">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%=@user.name%>的影集(<%=@user.attachments.size%>)</h3>
+      </div>
+
+
+
+      <table class="table gallery">
+        <tbody>
+        <% @user.attachments.order(id: :desc).each_with_index do |attachment, index| %>
+          <tr>
+            <td width="250px" style="text-align: center">
+              <%#= image_tag attachment.content.thumb.url, height: 150, alt: attachment.content.filename %>
+
+              <div class="border">
+                <div class="frame">
+                  <div class="image" style="background-image: url(<%=attachment.content.thumb.url%>)"></div>
+                </div>
+              </div>
+
+              <div class="imgWrap w190">
+                <div class="bg1"></div>
+                <div class="bg2"></div>
+                <div class="imgDiv">
+                  <div><a href="#"><%= image_tag attachment.content.thumb.url, height: 150, alt: attachment.content.filename %></a></div>
+                </div>
+              </div>
+            </td>
+            <td>
+              <h5 class="text-left">#<%=index%> <%= attachment.content.file.filename %></h5>
+              <div>上传时间: <%= attachment.created_at.to_s(:db) %></div>
+              <div>上传人 : <%= attachment.create_by&.name %></div>
+              <div>分辨率 : 100x300</div>
+            </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  /*
+   var s = $.extend({
+              // These are the defaults.
+              url: "",
+              method: "POST",
+              enctype: "multipart/form-data",
+              returnType: null,
+              allowDuplicates: true,
+              duplicateStrict: false,
+              allowedTypes: "*",
+              //For list of acceptFiles
+              // http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
+              acceptFiles: "*",
+              fileName: "file",
+              formData: false,
+              dynamicFormData:false,
+              maxFileSize: -1,
+              maxFileCount: -1,
+              multiple: true,
+              dragDrop: true,
+              autoSubmit: true,
+              showCancel: true,
+              showAbort: true,
+              showDone: false,
+              showDelete: false,
+              showError: true,
+              showStatusAfterSuccess: true,
+              showStatusAfterError: true,
+              showFileCounter: true,
+              fileCounterStyle: "). ",
+              showFileSize: true,
+              showProgress: false,
+              nestedForms: true,
+              showDownload: false,
+              onLoad: function (obj) {},
+              onSelect: function (files) {
+                  return true;
+              },
+              onSubmit: function (files, xhr) {},
+              onSuccess: function (files, response, xhr, pd) {},
+              onError: function (files, status, message, pd) {},
+              onCancel: function (files, pd) {},
+              onAbort: function (files, pd) {},
+              downloadCallback: false,
+              deleteCallback: false,
+              afterUploadAll: false,
+              serialize:true,
+              sequential:false,
+              sequentialCount:2,
+              customProgressBar: false,
+              abortButtonClass: "ajax-file-upload-abort",
+              cancelButtonClass: "ajax-file-upload-cancel",
+              dragDropContainerClass: "ajax-upload-dragdrop",
+              dragDropHoverClass: "state-hover",
+              errorClass: "ajax-file-upload-error",
+              uploadButtonClass: "ajax-file-upload",
+              dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
+              uploadStr:"Upload",
+              abortStr: "Abort",
+              cancelStr: "Cancel",
+              deleteStr: "Delete",
+              doneStr: "Done",
+              multiDragErrorStr: "Multiple File Drag &amp; Drop is not allowed.",
+              extErrorStr: "is not allowed. Allowed extensions: ",
+              duplicateErrorStr: "is not allowed. File already exists.",
+              sizeErrorStr: "is not allowed. Allowed Max size: ",
+              uploadErrorStr: "Upload is not allowed",
+              maxFileCountErrorStr: " is not allowed. Maximum allowed files are:",
+              downloadStr: "Download",
+              customErrorKeyStr: "jquery-upload-file-error",
+              showQueueDiv: false,
+              statusBarWidth: 400,
+              dragdropWidth: 400,
+              showPreview: false,
+              previewHeight: "auto",
+              previewWidth: "100%",
+              extraHTML:false,
+              uploadQueueOrder:'top',
+              headers: {}
+          }, options);
+   */
+  $(document).ready(function(){
+      $("#fileuploader").uploadFile({
+          url: "<%=user_attachments_path(@user)%>",
+          fileName: "content",
+          headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+          statusBarWidth: "100%",
+          dragdropWidth: "100%",
+          dragDropStr: "<span><b>拖拽文件到此出上传</b></span>",
+          uploadStr: "上传",
+      });
+  });
+</script>

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
-  def index
+  skip_before_action :check_login, only: [:new, :create]
 
+  def index
+    @users = User.all
   end
 
   def show
@@ -20,6 +22,10 @@ class UsersController < ApplicationController
     else
       render "new"
     end
+  end
+
+  def gallery
+    @user = User.find(params[:id])
   end
 
   private

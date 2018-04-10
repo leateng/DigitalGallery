@@ -2,3 +2,40 @@
 # yarn lockfile v1
 
 
+"async@>= 0.1.22":
+  version "2.6.0"
+  resolved "http://registry.npm.taobao.org/async/download/async-2.6.0.tgz#61a29abb6fcc026fea77e56d1c6ec53a795951f4"
+  dependencies:
+    lodash "^4.14.0"
+
+form@:
+  version "0.2.4"
+  resolved "http://registry.npm.taobao.org/form/download/form-0.2.4.tgz#69a0e9bf9003e7d6e4eee7f9d16239148a129a21"
+  dependencies:
+    async ">= 0.1.22"
+    validator ">= 0.4.9"
+
+jquery-file-upload@^4.0.11:
+  version "4.0.11"
+  resolved "http://registry.npm.taobao.org/jquery-file-upload/download/jquery-file-upload-4.0.11.tgz#840d74af95791d3df8472d47ac803734c61f32fb"
+  dependencies:
+    form ""
+    jquery ">=1.6"
+
+jquery-form@^4.2.2:
+  version "4.2.2"
+  resolved "http://registry.npm.taobao.org/jquery-form/download/jquery-form-4.2.2.tgz#9f96fb141ec9cbe0cdaf58b4d3f1dcbb009cdd52"
+  dependencies:
+    jquery ">=1.7.2"
+
+jquery@>=1.6, jquery@>=1.7.2, jquery@^3.3.1:
+  version "3.3.1"
+  resolved "http://registry.npm.taobao.org/jquery/download/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
+
+lodash@^4.14.0:
+  version "4.17.5"
+  resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+
+"validator@>= 0.4.9":
+  version "9.4.1"
+  resolved "http://registry.npm.taobao.org/validator/download/validator-9.4.1.tgz#abf466d398b561cd243050112c6ff1de6cc12663"

@@ -1,0 +1,25 @@
+<%= link_to "create client", new_client_path, class: 'btn btn-success' %>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>#</th>
+    <th>姓名</th>
+    <th>电话</th>
+    <th>邮箱</th>
+    <th></th>
+  </tr>
+  </thead>
+
+  <tbody>
+  <% @clients.each do |client| %>
+    <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
