@@ -30,6 +30,10 @@ Rails.application.routes.draw do
     member do
       get :gallery
     end
+
+    collection do
+      get :clients
+    end
   end
 
   resources :clients

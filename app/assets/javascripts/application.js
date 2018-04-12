@@ -11,7 +11,6 @@
 // about supported directives.
 //
 //= require jquery
-//= require jquery_ujs
 //= require jquery-form/src/jquery.form
 //= require jquery-file-upload/js/jquery.uploadfile
 //= require bootstrap

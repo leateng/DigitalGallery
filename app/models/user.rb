@@ -28,4 +28,12 @@ class User < ApplicationRecord
                BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
+
+  def images
+    attachments.collect{|a| a.meta_info[:type] == "jpeg"}
+  end
+
+  def videos
+    attachments.collect{|a| a.meta_info[:type] == "image/jpeg"}
+  end
 end
