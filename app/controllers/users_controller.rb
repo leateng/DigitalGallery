@@ -24,14 +24,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def gallery
-    @user = User.find(params[:id])
-  end
-
-  def clients
-    @users = User.all
-  end
-
   private
 
   def user_params

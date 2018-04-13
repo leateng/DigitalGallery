@@ -30,10 +30,10 @@ class User < ApplicationRecord
   end
 
   def images
-    attachments.collect{|a| a.meta_info[:type] == "jpeg"}
+    attachments.select{|a| a.content_type == "jpeg"}
   end
 
   def videos
-    attachments.collect{|a| a.meta_info[:type] == "image/jpeg"}
+    attachments.select{|a| a.content_type == "mp4"}
   end
 end

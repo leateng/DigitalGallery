@@ -1,0 +1,9 @@
+<%if @attachment.content_type == "jpeg"%>
+  <%= image_tag @attachment.content.url, width: "100%"%>
+<%else%>
+  <video width="100%" id="vdHotPress" autoplay controls>
+    <!-- set width to 100% and add controls for play and volume buttons-->
+    <source src="<%=@attachment.content.url%>" type="video/mp4"/>
+    Your browser does not support the video tag.
+  </video>
+<%end%>

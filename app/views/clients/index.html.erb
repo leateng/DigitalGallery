@@ -1,25 +1,45 @@
-<%= link_to "create client", new_client_path, class: 'btn btn-success' %>
+<%= content_for :header do%>
+  <%=form_tag clients_path, class: "navbar-form navbar-left", method: :get do %>
+    <div class="form-group">
+      <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "姓名，邮箱，电话" %>
+    </div>
+  <%end%>
+<%end%>
+
+<div class="row">
+  <div class="col-md-12" style="margin-bottom: 20px;">
+    <%= link_to  new_client_path, class: 'btn btn-success pull-right' do%>
+      <span class="glyphicon glyphicon-plus-sign"></span> 添加新客户
+    <%end%>
+  </div>
+</div>
 
 <table class="table">
   <thead>
   <tr>
-    <th>#</th>
+    <th>id</th>
+    <th>头像</th>
     <th>姓名</th>
-    <th>电话</th>
     <th>邮箱</th>
-    <th></th>
+    <th>电话</th>
+    <th>照片数</th>
+    <th>视频数</th>
+    <th>操作</th>
   </tr>
   </thead>
 
   <tbody>
-  <% @clients.each do |client| %>
+  <%@users.each do |user|%>
     <tr>
-      <td></td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><%=user.id%></td>
+      <td><%=link_to gravatar_for(user), user_attachments_path(user)%></td>
+      <td><%=user.name%></td>
+      <td><%=user.email%></td>
+      <td><%=user.telephone%></td>
+      <td><%=user.images.count%></td>
+      <td><%=user.videos.count%></td>
       <td></td>
     </tr>
-  <% end %>
+  <%end%>
   </tbody>
 </table>

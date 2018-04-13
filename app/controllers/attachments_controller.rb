@@ -17,6 +17,12 @@ class AttachmentsController < ApplicationController
     end
   end
 
+  def show
+    @attachment = Attachment.find(params[:id])
+
+    render layout: false
+  end
+
   def edit
   end
 
