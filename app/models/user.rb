@@ -1,7 +1,8 @@
 class User < ApplicationRecord
   has_secure_password
+  mount_uploader :gravatar, GravatarUploader
 
-  has_many :attachments
+  has_many :attachments, dependent: :destroy
 
   # 用户级别，管理员， 操作员， 普通用户
   enum role: [:admin, :operator, :user]

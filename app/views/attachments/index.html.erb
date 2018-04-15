@@ -1,17 +1,19 @@
 <% provide :title, @user.name %>
 
-<div class="row">
-  <div class="col-md-4 upload-sidebar">
-    <div id="fileuploader"></div>
+<div class="row mt-20">
+  <div class="col-md-4" >
+    <div class="uploader">
+      <div id="fileuploader" ></div>
+    </div>
   </div>
 
-  <div class="col-md-8 col-md-offset-4">
+  <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h3 class="panel-title"><%=@user.name%>的影集(<%=@user.attachments.size%>)</h3>
       </div>
 
-      <table class="table gallery">
+      <table class="table table-hover gallery">
         <tbody>
         <% @user.attachments.order(id: :desc).each_with_index do |attachment, index| %>
           <tr>
@@ -42,20 +44,6 @@
             </td>
             <td>
               <div>
-                <div class="pull-right" style="margin-top:  0px;">
-                  <%=link_to attachment.content.url do%>
-                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
-                      <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                    </button>
-                  <%end%>
-
-                  <%=link_to user_attachment_path(@user, attachment), method: :delete, data: { confirm: 'Are you sure?' } do%>
-                    <button type="button" class="btn btn-default btn-sm" aria-label="Left Align">
-                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    </button>
-                  <%end%>
-                </div>
-
                 <h5 class="text-left">#<%= index + 1 %> <%= attachment.content.file.filename %></h5>
                 <dl class="dl-horizontal">
                   <dt>上传时间</dt>
@@ -74,7 +62,44 @@
                     <dt>时长</dt>
                     <dd><%= "#{attachment.meta_info[:duration].to_i} s" %></dd>
                   <% end %>
+
+                  <% if attachment.image? %>
+                    <dt>关联视频</dt>
+                    <dd>
+                      <div class="btn-group btn-group-sm video-select">
+                        <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          --- <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                          <% @user.videos.each do |video|%>
+                            <li>
+                              <a href="javascript: void(0);" data-url="<%=relate_video_attachment_user_attachment_path(@user, attachment, video.id)%>">
+                                <%=video.content.file.filename%>
+                              </a>
+                            </li>
+                          <%end%>
+                        </ul>
+                      </div>
+                    </dd>
+                  <% end %>
                 </dl>
+
+                <div class="pull-right" style="margin-top: -14px;">
+                  <%= link_to attachment.content.url,
+                              class: "btn btn-default btn-sm",
+                              title: "下载",
+                              data: {toggle: "tooltip", placement: "top"} do %>
+                    <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
+                  <% end %>
+
+                  <%= link_to user_attachment_path(@user, attachment),
+                              method: :delete,
+                              data: {confirm: '确定删除?', toggle: "tooltip", placement: "top"},
+                              title: "删除",
+                              class: "btn btn-danger btn-sm" do %>
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                  <% end %>
+                </div>
               </div>
             </td>
           </tr>
@@ -103,89 +128,89 @@
 
 <script>
     /*
-     var s = $.extend({
-                // These are the defaults.
-                url: "",
-                method: "POST",
-                enctype: "multipart/form-data",
-                returnType: null,
-                allowDuplicates: true,
-                duplicateStrict: false,
-                allowedTypes: "*",
-                //For list of acceptFiles
-                // http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
-                acceptFiles: "*",
-                fileName: "file",
-                formData: false,
-                dynamicFormData:false,
-                maxFileSize: -1,
-                maxFileCount: -1,
-                multiple: true,
-                dragDrop: true,
-                autoSubmit: true,
-                showCancel: true,
-                showAbort: true,
-                showDone: false,
-                showDelete: false,
-                showError: true,
-                showStatusAfterSuccess: true,
-                showStatusAfterError: true,
-                showFileCounter: true,
-                fileCounterStyle: "). ",
-                showFileSize: true,
-                showProgress: false,
-                nestedForms: true,
-                showDownload: false,
-                onLoad: function (obj) {},
-                onSelect: function (files) {
-                    return true;
-                },
-                onSubmit: function (files, xhr) {},
-                onSuccess: function (files, response, xhr, pd) {},
-                onError: function (files, status, message, pd) {},
-                onCancel: function (files, pd) {},
-                onAbort: function (files, pd) {},
-                downloadCallback: false,
-                deleteCallback: false,
-                afterUploadAll: false,
-                serialize:true,
-                sequential:false,
-                sequentialCount:2,
-                customProgressBar: false,
-                abortButtonClass: "ajax-file-upload-abort",
-                cancelButtonClass: "ajax-file-upload-cancel",
-                dragDropContainerClass: "ajax-upload-dragdrop",
-                dragDropHoverClass: "state-hover",
-                errorClass: "ajax-file-upload-error",
-                uploadButtonClass: "ajax-file-upload",
-                dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
-                uploadStr:"Upload",
-                abortStr: "Abort",
-                cancelStr: "Cancel",
-                deleteStr: "Delete",
-                doneStr: "Done",
-                multiDragErrorStr: "Multiple File Drag &amp; Drop is not allowed.",
-                extErrorStr: "is not allowed. Allowed extensions: ",
-                duplicateErrorStr: "is not allowed. File already exists.",
-                sizeErrorStr: "is not allowed. Allowed Max size: ",
-                uploadErrorStr: "Upload is not allowed",
-                maxFileCountErrorStr: " is not allowed. Maximum allowed files are:",
-                downloadStr: "Download",
-                customErrorKeyStr: "jquery-upload-file-error",
-                showQueueDiv: false,
-                statusBarWidth: 400,
-                dragdropWidth: 400,
-                showPreview: false,
-                previewHeight: "auto",
-                previewWidth: "100%",
-                extraHTML:false,
-                uploadQueueOrder:'top',
-                headers: {}
-            }, options);
-     */
-    $(document).ready(function(){
-        var current_attachment_order;
+        var s = $.extend({
+                   // These are the defaults.
+                   url: "",
+                   method: "POST",
+                   enctype: "multipart/form-data",
+                   returnType: null,
+                   allowDuplicates: true,
+                   duplicateStrict: false,
+                   allowedTypes: "*",
+                   //For list of acceptFiles
+                   // http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
+                   acceptFiles: "*",
+                   fileName: "file",
+                   formData: false,
+                   dynamicFormData:false,
+                   maxFileSize: -1,
+                   maxFileCount: -1,
+                   multiple: true,
+                   dragDrop: true,
+                   autoSubmit: true,
+                   showCancel: true,
+                   showAbort: true,
+                   showDone: false,
+                   showDelete: false,
+                   showError: true,
+                   showStatusAfterSuccess: true,
+                   showStatusAfterError: true,
+                   showFileCounter: true,
+                   fileCounterStyle: "). ",
+                   showFileSize: true,
+                   showProgress: false,
+                   nestedForms: true,
+                   showDownload: false,
+                   onLoad: function (obj) {},
+                   onSelect: function (files) {
+                       return true;
+                   },
+                   onSubmit: function (files, xhr) {},
+                   onSuccess: function (files, response, xhr, pd) {},
+                   onError: function (files, status, message, pd) {},
+                   onCancel: function (files, pd) {},
+                   onAbort: function (files, pd) {},
+                   downloadCallback: false,
+                   deleteCallback: false,
+                   afterUploadAll: false,
+                   serialize:true,
+                   sequential:false,
+                   sequentialCount:2,
+                   customProgressBar: false,
+                   abortButtonClass: "ajax-file-upload-abort",
+                   cancelButtonClass: "ajax-file-upload-cancel",
+                   dragDropContainerClass: "ajax-upload-dragdrop",
+                   dragDropHoverClass: "state-hover",
+                   errorClass: "ajax-file-upload-error",
+                   uploadButtonClass: "ajax-file-upload",
+                   dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
+                   uploadStr:"Upload",
+                   abortStr: "Abort",
+                   cancelStr: "Cancel",
+                   deleteStr: "Delete",
+                   doneStr: "Done",
+                   multiDragErrorStr: "Multiple File Drag &amp; Drop is not allowed.",
+                   extErrorStr: "is not allowed. Allowed extensions: ",
+                   duplicateErrorStr: "is not allowed. File already exists.",
+                   sizeErrorStr: "is not allowed. Allowed Max size: ",
+                   uploadErrorStr: "Upload is not allowed",
+                   maxFileCountErrorStr: " is not allowed. Maximum allowed files are:",
+                   downloadStr: "Download",
+                   customErrorKeyStr: "jquery-upload-file-error",
+                   showQueueDiv: false,
+                   statusBarWidth: 400,
+                   dragdropWidth: 400,
+                   showPreview: false,
+                   previewHeight: "auto",
+                   previewWidth: "100%",
+                   extraHTML:false,
+                   uploadQueueOrder:'top',
+                   headers: {}
+               }, options);
+        */
 
+    $(function(){
+        // 上传附件
         $("#fileuploader").uploadFile({
             url: "<%=user_attachments_path(@user)%>",
             fileName: "content",
@@ -193,55 +218,22 @@
             statusBarWidth: "100%",
             dragdropWidth: "100%",
             dragDropStr: "<span><b>拖拽文件到此出上传</b></span>",
+            uploadButtonClass: "btn btn-success btn-sm",
             uploadStr: "上传",
             allowedTypes: "jpg,jpeg,mp4",
             extErrorStr: "不支持此格式文件上传. 支持的文件格式为: ",
-            maxFileSize: 10*1024*1024, //10M
+            maxFileSize: 10 * 1024 * 1024, //10M
             sizeErrorStr: "文件过大，上传文件最大: ",
-
         });
 
-        $(".attachment").on("click", function (e) {
-            $("#attachment-dialog .modal-body").load($(this).data("url"));
-            $("#attachment-dialog .modal-title").text($(this).data("title"));
-            $("#attachment-dialog").modal('show');
-            current_attachment_order = parseInt($(this).data("order"));
+        // 更新照片关联的视频
+        $(".video-select a").on("click", function(e){
+            $.post("");
 
+          console.log($(this).data("image-id"))
+          console.log($(this).data("video-id"))
         });
-
-        // 模态框隐藏时删除内容， 防止视频继续播放
-        $('#attachment-dialog').on('hidden.bs.modal', function (e) {
-            $("#attachment-dialog .modal-body").text("loading");
-            current_attachment_order = undefined;
-        });
-
-        $("#attachment-dialog").on("keydown", function(e){
-            console.log(e.key)
-            if(e.key == "ArrowLeft") {
-                if(current_attachment_order != undefined && current_attachment_order > 0) {
-                    current_attachment_order = current_attachment_order - 1;
-                    showOrderAttachment(current_attachment_order);
-                }
-            }
-
-            if (e.key == "ArrowRight") {
-                if (current_attachment_order != undefined && current_attachment_order < $(".attachment").size()) {
-                    current_attachment_order = current_attachment_order + 1;
-                    showOrderAttachment(current_attachment_order);
-                }
-            }
-        });
-
-        function showOrderAttachment(order) {
-            var $attachment = $(".attachment[data-order=" + order + "]");
-            var attachment_url = $attachment .data("url");
-            var attachment_title = $attachment .data("title");
-
-            if (attachment_url != undefined) {
-                $("#attachment-dialog .modal-body").load(attachment_url);
-                $("#attachment-dialog .modal-title").text(attachment_title);
-            }
-        }
-
     });
+
+
 </script>

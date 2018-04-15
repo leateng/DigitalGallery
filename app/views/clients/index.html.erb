@@ -7,17 +7,17 @@
 <%end%>
 
 <div class="row">
-  <div class="col-md-12" style="margin-bottom: 20px;">
+  <div class="col-md-12" style="margin-top: 20px;">
     <%= link_to  new_client_path, class: 'btn btn-success pull-right' do%>
       <span class="glyphicon glyphicon-plus-sign"></span> 添加新客户
     <%end%>
   </div>
 </div>
 
-<table class="table">
+<table class="table table-condensed table-hover table-strip table-content-middle">
   <thead>
   <tr>
-    <th>id</th>
+    <th>#</th>
     <th>头像</th>
     <th>姓名</th>
     <th>邮箱</th>
@@ -29,17 +29,44 @@
   </thead>
 
   <tbody>
-  <%@users.each do |user|%>
+  <%@users.each_with_index do |user, index|%>
     <tr>
-      <td><%=user.id%></td>
-      <td><%=link_to gravatar_for(user), user_attachments_path(user)%></td>
+      <td><%= index + 1%></td>
+      <td><%=link_to gravatar_for(user),
+                     user_attachments_path(user),
+                     title: "上传",
+                     data: {toggle: "tooltip", placement: "right"} %></td>
       <td><%=user.name%></td>
       <td><%=user.email%></td>
       <td><%=user.telephone%></td>
       <td><%=user.images.count%></td>
       <td><%=user.videos.count%></td>
-      <td></td>
+      <td>
+        <%= link_to user_attachments_path(user),
+                    class: "btn btn-default btn-sm",
+                    title: "上传",
+                    data: {toggle: "tooltip", placement: "top"} do %>
+          <span class="glyphicon glyphicon-upload"></span>
+        <% end %>
+
+        <%= link_to edit_user_path(user),
+                    class: "btn btn-default btn-sm",
+                    title: "编辑",
+                    data: {toggle: "tooltip", placement: "top"}  do %>
+          <span class="glyphicon glyphicon-edit"></span>
+        <% end %>
+
+        <%=link_to client_path(user),
+                   method: :delete,
+                   data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
+                   title: "删除",
+                   class: "btn btn-danger btn-sm" do %>
+          <span class="glyphicon glyphicon-remove"></span>
+        <%end%>
+      </td>
     </tr>
   <%end%>
   </tbody>
 </table>
+
+<%= paginate @users %>

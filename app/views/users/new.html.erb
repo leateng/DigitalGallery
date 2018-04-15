@@ -7,19 +7,27 @@
     <%= form_for @user do |f| %>
       <%= render partial: 'shared/error_messages', locals: {obj: @user} %>
 
+      <div class="form-group">
       <%= f.label "用户名" %>
       <%= f.text_field :name, class: "form-control" %>
+      </div>
 
-      <%= f.label "邮箱" %>
-      <%= f.text_field :email, class: "form-control" %>
+      <div class="form-group">
+        <%= f.label "邮箱" %>
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
 
-      <%= f.label "密码" %>
-      <%= f.password_field :password, class: "form-control" %>
+      <div class="form-group">
+        <%= f.label "密码" %>
+        <%= f.password_field :password, class: "form-control" %>
+      </div>
 
-      <%= f.label "确认密码" %>
-      <%= f.password_field :password_confirmation, class: "form-control" %>
+      <div class="form-group">
+        <%= f.label "确认密码" %>
+        <%= f.password_field :password_confirmation, class: "form-control" %>
+      </div>
 
-      <%= f.submit "提交注册信息", class: "btn btn-primary" %>
+      <%= f.submit "提交注册信息", class: "btn btn-success form-control" %>
      <% end %>
   </div>
 </div>

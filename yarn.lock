@@ -28,13 +28,19 @@ jquery-form@^4.2.2:
   dependencies:
     jquery ">=1.7.2"
 
-jquery@>=1.6, jquery@>=1.7.2, jquery@^3.3.1:
+jquery@>=1.12.0, jquery@>=1.6, jquery@>=1.7.2, jquery@^3.3.1:
   version "3.3.1"
   resolved "http://registry.npm.taobao.org/jquery/download/jquery-3.3.1.tgz#958ce29e81c9790f31be7792df5d4d95fc57fbca"
 
 lodash@^4.14.0:
   version "4.17.5"
   resolved "http://registry.npm.taobao.org/lodash/download/lodash-4.17.5.tgz#99a92d65c0272debe8c96b6057bc8fbfa3bed511"
+
+toastr@^2.1.4:
+  version "2.1.4"
+  resolved "http://registry.npm.taobao.org/toastr/download/toastr-2.1.4.tgz#8b43be64fb9d0c414871446f2db8e8ca4e95f181"
+  dependencies:
+    jquery ">=1.12.0"
 
 "validator@>= 0.4.9":
   version "9.4.1"

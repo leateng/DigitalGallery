@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'https://gems.ruby-china.org'
 
 git_source(:github) do |repo_name|
   repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
@@ -38,6 +38,9 @@ gem 'bootstrap-sass', '3.3.6'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
+
+gem 'sidekiq'
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

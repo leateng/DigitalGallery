@@ -8,9 +8,19 @@ class SessionsController < ApplicationController
     user = User.find_by( email: params[:session][:email].downcase )
     if user && user.authenticate(params[:session][:password])
       log_in user
-      redirect_to user
+
+      case user.role
+      when "user"
+        redirect_to user
+      when "operator"
+        redirect_to clients_path
+      when "admin"
+        redirect_to root_path
+      else
+        redirect_to root_path
+      end
     else
-      flash.now[:danger] = "Invalid email/password combination"
+      flash.now[:error] = "错误的用户名或密码"
       render 'new'
     end
   end

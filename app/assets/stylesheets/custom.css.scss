@@ -1,5 +1,6 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import "toastr/toastr";
 
 /* mixins, variables, etc. */
 
@@ -21,6 +22,7 @@ html {
 
 body {
   padding-top: 60px;
+  background-color: #f6f6f6;
 }
 
 section { overflow: auto;
@@ -45,7 +47,7 @@ textarea {
   min-height: 700px;
 }
 
-table.table{
+table.table-content-middle{
   tbody {
     tr {
       td {
@@ -54,6 +56,14 @@ table.table{
     }
   }
 
+}
+
+.navbar-default {
+  background-color: #FFFFFF;
+}
+
+.container {
+  background-color: #FFFFFF;
 }
 
 /* typography */
@@ -172,22 +182,19 @@ aside {
   border-radius: 25px;
 }
 
+.gravatar-sm {
+  float: left;
+  margin-top: -5px;
+  margin-right: 5px;
+  width: 30px;
+  border-radius: 15px;
+}
+
 .gravatar_edit {
   margin-top: 15px;
 }
 
 /* froms */
-
-/*
-input, textarea, select, .uneditable-input {
-  border: 1px solid #bbb;
-  width: 100%;
-  margin-bottom: 15px;
-  padding: 5px;
-  @include box_sizing();
-}
-*/
-
 input {
   height: auto !important;
 }
@@ -208,16 +215,42 @@ input {
 }
 
 /* uploader */
-.upload-sidebar {
-  position: fixed;
+.uploader {
+  //position: fixed;
   background-color: #f7f7f9;
-  min-height: 700px;
-  width: 380px;
-  border-radius: 5px;
+  min-height: 200px;
+  //width: 380px;
+  border-radius: 15px;
+
+  .ajax-upload-dragdrop {
+    padding: 10px;
+    .btn {
+      margin-right: 10px;
+    }
+  }
+
+  .ajax-file-upload-statusbar {
+    margin: 0;
+    border: 0;
+    border-top: 1px solid #dddddd;
+    border-radius: 0;
+
+    .ajax-file-upload-filename {
+      width: 100%;
+    }
+
+    .ajax-file-upload-progress {
+      width: 100%;
+
+      .ajax-file-upload-bar {
+        background-color: #73b566;
+      }
+    }
+  }
 }
 .ajax-upload-dragdrop {
   //width: 100% ;
-  margin-top: 15px;
+  //margin-top: 15px;
 }
 
 /* gallery */

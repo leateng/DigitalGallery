@@ -10,10 +10,21 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
+// all plugins
 //= require jquery
 //= require jquery-form/src/jquery.form
 //= require jquery-file-upload/js/jquery.uploadfile
 //= require bootstrap
 //= require rails-ujs
-//  require turbolinks
-//= require_tree .
+//= require toastr/toastr
+// require turbolinks
+// require_tree .
+
+// page js
+//= require attachments.js
+
+
+// for global tooltips
+$(document).ready(function($){
+    $('[data-toggle="tooltip"]').tooltip();
+});

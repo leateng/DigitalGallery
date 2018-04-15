@@ -32,8 +32,28 @@ class AttachmentsController < ApplicationController
   def destroy
     @user = User.find(params[:user_id])
     @attachment = Attachment.find(params[:id])
-    @attachment.destroy
+    if @attachment.destroy
+      flash['success'] = "#{@attachment.content.file.filename} 删除成功"
+    else
+      flash['error'] = "#{@attachment.content.file.filename} 删除失败"
+    end
 
-    redirect_to gallery_user_url(@user)
+    redirect_to user_attachments_path(@user)
+  end
+
+  def relate_video
+    image = Attachment.find(params["image_id"])
+    video = Attachment.find(params["video_id"])
+
+    if image.blank? || video.blank?
+      render json: {status: 404, message: "record not found"}
+    else
+      image.video_id = video.id
+      if image.save
+        render json: {status: 200, message: "success"}
+      else
+        render json: {status: 500, message: "error"}
+      end
+    end
   end
 end

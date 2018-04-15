@@ -13,7 +13,11 @@ Rails.application.routes.draw do
 
 
   resources :users, constraints: { id: /\d+/ } do
-    resources :attachments, constraints: { id: /\d+/ }
+    resources :attachments, constraints: { id: /\d+/ } do
+      member do
+        post "relate_video/:video_id", action: "relate_video", as: "relate_video_attachment"
+      end
+    end
   end
   resources :clients, constraints: { id: /\d+/ }
 end
