@@ -83,4 +83,8 @@ class Attachment < ApplicationRecord
   def delete_video_thumb
     FileUtils.rm(video_thumb_path) if File.exist?(video_thumb_path)
   end
+
+  def relate_video
+    self.class.where(id: video_id).first
+  end
 end

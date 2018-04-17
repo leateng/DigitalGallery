@@ -1,25 +1,61 @@
-<table class="table">
+<%= content_for :header do%>
+  <%=form_tag users_path, class: "navbar-form navbar-left", method: :get do %>
+    <div class="form-group">
+      <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "姓名，邮箱，电话" %>
+    </div>
+  <%end%>
+<%end%>
+
+
+<table class="table table-condensed table-hover table-strip table-content-middle">
   <thead>
   <tr>
-    <th>id</th>
+    <th>#</th>
     <th>头像</th>
     <th>姓名</th>
     <th>邮箱</th>
     <th>电话</th>
+    <th>角色</th>
     <th>操作</th>
   </tr>
   </thead>
 
   <tbody>
-  <%@users.each do |user|%>
-  <tr>
-    <td><%=user.id%></td>
-    <td><%=link_to gravatar_for(user), gallery_user_path(user)%></td>
-    <td><%=user.name%></td>
-    <td><%=user.email%></td>
-    <td><%=user.telephone%></td>
-    <td></td>
-  </tr>
+  <%@users.each_with_index do |user, index|%>
+    <tr>
+      <td><%= index + 1%></td>
+      <td><%= gravatar_for(user) %></td>
+      <td><%=user.name%></td>
+      <td><%=user.email%></td>
+      <td><%=user.telephone%></td>
+      <td><%=user.role%></td>
+
+      <td>
+        <%= link_to edit_user_path(user),
+                    class: "btn btn-default btn-sm",
+                    title: "编辑",
+                    data: {toggle: "tooltip", placement: "top"}  do %>
+          <span class="glyphicon glyphicon-edit"></span>
+        <% end %>
+
+        <%= link_to reset_password_user_path(user),
+                    class: "btn btn-default btn-sm",
+                    title: "重置密码",
+                    data: {toggle: "tooltip", placement: "top"} do %>
+          <span class="glyphicon glyphicon-lock"></span>
+        <% end %>
+
+        <%=link_to user_path(user),
+                   method: :delete,
+                   data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
+                   title: "删除",
+                   class: "btn btn-danger btn-sm" do %>
+          <span class="glyphicon glyphicon-remove"></span>
+        <%end%>
+      </td>
+    </tr>
   <%end%>
   </tbody>
 </table>
+
+<%= paginate @users %>

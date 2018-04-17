@@ -34,6 +34,7 @@ class Ability
       can :manage, :all
     elsif user.operator?
       can :manage, User, :role => [:user]
+      can :operate, User
       can :create, User
     elsif user.user?
       can :read, User, :id => user.id

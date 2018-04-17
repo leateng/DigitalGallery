@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_secure_password
+  attr_accessor :update_profile
   mount_uploader :gravatar, GravatarUploader
 
   has_many :attachments, dependent: :destroy
@@ -17,7 +18,7 @@ class User < ApplicationRecord
             length: { maximum: 255},
             format: { with: VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
-  validates :password, length: { minimum: 6 }
+  validates :password, length: { minimum: 6 }, unless: Proc.new{|user| user.update_profile == true}
   validates :telephone, presence: true, format: {with: VALID_TELEPHONE_REGEX}, uniqueness: true, if: Proc.new{|user| user.role == "user"}
 
   # 普通用户

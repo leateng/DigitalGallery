@@ -1,12 +1,25 @@
 <% provide :title, @user.name %>
 
 <div class="row">
-  <aside class="col-md-4">
+  <aside class="col-md-3">
     <section class="user_info">
-      <h1>
-        <%= gravatar_for @user %>
-        <%= @user.name %>
+      <h1 class="text-right">
+        <%= gravatar_for @user, "garavatar gravatar-lg" %>
       </h1>
     </section>
   </aside>
+  <div class="col-md-9 text-left">
+    <h1 class="text-left"><%= @user.name %></h1>
+
+    <dl>
+      <dt>邮箱</dt>
+      <dd><%= @user.email%></dd>
+
+      <dt>电话</dt>
+      <dd><%= @user.telephone || "---" %></dd>
+
+      <dt>角色</dt>
+      <dd><%= @user.role %></dd>
+    </dl>
+  </div>
 </div>

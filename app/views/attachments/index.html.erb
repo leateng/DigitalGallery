@@ -68,7 +68,8 @@
                     <dd>
                       <div class="btn-group btn-group-sm video-select">
                         <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          --- <span class="caret"></span>
+                          <%= attachment.relate_video.blank? ? "----" : attachment.relate_video.content.file.filename %>
+                          <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
                           <% @user.videos.each do |video|%>
@@ -228,10 +229,17 @@
 
         // 更新照片关联的视频
         $(".video-select a").on("click", function(e){
-            $.post("");
-
-          console.log($(this).data("image-id"))
-          console.log($(this).data("video-id"))
+            //$.post("");
+            var $link = $(this);
+            var url = $(this).data("url");
+            var jqxhr = $.post(url, function (resp) {
+                toastr.success(resp["message"])
+                console.log($link.parent().parent().parent().children(".btn").html(resp['video_title'] + '<span class="caret"></span>' ))
+            })
+              .fail(function (resp) {
+                  console.log(resp)
+                  toastr.error(resp["message"] || "更新失败")
+              });
         });
     });
 

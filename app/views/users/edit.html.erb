@@ -1,1 +1,40 @@
-<%=@user.name%>
+<% provide(:title, 'Edit Profile') %>
+
+<h1><%=@user.name%></h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for @user do |f| %>
+      <%= render partial: 'shared/error_messages', locals: {obj: @user} %>
+
+      <div class="form-group">
+        <%= f.label "用户名" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "邮箱" %>
+        <%= f.text_field :email, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "电话" %>
+        <%= f.text_field :telephone, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label "头像" %>
+        <%= f.file_field :gravatar, class: "form-control" %>
+      </div>
+
+      <% if current_user.admin? %>
+        <div class="form-group">
+          <%= f.label "角色" %>
+          <%= f.select :role, %w(admin operator user), {include_blank: false}, class: "form-control" %>
+        </div>
+      <%end%>
+
+      <%= f.submit "更改信息", class: "btn btn-success form-control" %>
+    <% end %>
+  </div>
+</div>

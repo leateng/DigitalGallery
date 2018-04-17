@@ -13,6 +13,11 @@ Rails.application.routes.draw do
 
 
   resources :users, constraints: { id: /\d+/ } do
+    member do
+      get :reset_password, action: "edit_password"
+      post :reset_password, action: "update_password"
+    end
+
     resources :attachments, constraints: { id: /\d+/ } do
       member do
         post "relate_video/:video_id", action: "relate_video", as: "relate_video_attachment"

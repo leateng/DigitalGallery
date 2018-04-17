@@ -42,17 +42,19 @@ class AttachmentsController < ApplicationController
   end
 
   def relate_video
-    image = Attachment.find(params["image_id"])
+    image = Attachment.find(params["id"])
     video = Attachment.find(params["video_id"])
 
     if image.blank? || video.blank?
-      render json: {status: 404, message: "record not found"}
+      render json: {status: 404, message: "没有找到数据，更新失败"}
     else
       image.video_id = video.id
       if image.save
-        render json: {status: 200, message: "success"}
+        render json: {status: 200,
+                      message: "关联#{video.content.file.filename}到#{image.content.file.filename}成功",
+                      video_title: video.content.file.filename}
       else
-        render json: {status: 500, message: "error"}
+        render json: {status: 500, message: "保存数据失败"}
       end
     end
   end

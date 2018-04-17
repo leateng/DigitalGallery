@@ -4,10 +4,10 @@ class ClientsController < ApplicationController
   def index
     s_text = params[:search]
     if s_text.blank?
-      @users = User.includes(:attachments).all.page(params[:page]).per(15)
+      @users = User.clients.includes(:attachments).all.page(params[:page]).per(15)
     else
       s_text.strip!
-      @users = User.includes(:attachments).where("name=? or email=? or telephone=?", s_text, s_text, s_text).page(params[:page])
+      @users = User.clients.includes(:attachments).where("name=? or email=? or telephone=?", s_text, s_text, s_text).page(params[:page])
     end
   end
 
@@ -19,6 +19,17 @@ class ClientsController < ApplicationController
   end
 
   def create
+    @client = User.new(client_params)
+    @client.password = @client.telephone + "@123"
+    @client.password_confirmation = @client.telephone + "@123"
+    @client.role = "user"
+
+    if @client.save
+      flash[:success] = "创建客户#{@client.name}成功"
+      redirect_to clients_path
+    else
+      render "new"
+    end
   end
 
   def edit
@@ -37,5 +48,11 @@ class ClientsController < ApplicationController
     end
 
     redirect_back fallback_location: clients_path
+  end
+
+  def client_params
+    params.require(:user).permit(:name,
+                                 :email,
+                                 :telephone)
   end
 end

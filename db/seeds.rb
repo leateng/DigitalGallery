@@ -10,5 +10,11 @@ User.create({name: "root", password: "root@123", password_confirmation: "root@12
 User.create({name: "liteng", password: "liteng@123", password_confirmation: "liteng@123", email: "liteng@sample.com", role: :operator})
 
 100.times do |i|
-  u = User.create({name: "user#{i}", password: "user#{i}@123", password_confirmation: "user#{i}@123", email: "user#{i}@sample.com", role: :user})
+  u = User.create({name: "user#{i}",
+                   password: "user#{i}@123",
+                   password_confirmation: "user#{i}@123",
+                   email: "user#{i}@sample.com",
+                   role: :user,
+                   telephone: "#{10000000000 + i}"})
+  puts u.errors.inspect
 end
