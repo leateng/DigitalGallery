@@ -1,5 +1,5 @@
 class ClientsController < ApplicationController
-  # todo: 权限系统完成后要改造成只 User.clients
+
   # todo: 对附件数量可以添加字段做counter_cache
   def index
     s_text = params[:search]

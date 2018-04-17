@@ -10,10 +10,17 @@
   <div class="col-md-8">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h3 class="panel-title"><%=@user.name%>的影集(<%=@user.attachments.size%>)</h3>
+        <h3 class="panel-title"><%= gravatar_for(@user, "gravatar-sm")%><%=@user.name%>的影集(<%=@user.attachments.size%>)</h3>
       </div>
 
-      <table class="table table-hover gallery">
+      <%if @user.attachments.size == 0%>
+        <div class="panel-body">
+          <div class="text-center">
+            还没有上传资源......
+          </div>
+        </div>
+      <%else%>
+        <table class="table table-hover gallery">
         <tbody>
         <% @user.attachments.order(id: :desc).each_with_index do |attachment, index| %>
           <tr>
@@ -107,6 +114,7 @@
         <% end %>
         </tbody>
       </table>
+      <%end%>
     </div>
   </div>
 </div>

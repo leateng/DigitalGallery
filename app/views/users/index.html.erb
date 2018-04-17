@@ -6,56 +6,58 @@
   <%end%>
 <%end%>
 
+<div class="row mt-20">
+  <div class="col-md-12">
+    <table class="table table-condensed table-hover table-strip table-content-middle">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>头像</th>
+        <th>姓名</th>
+        <th>邮箱</th>
+        <th>电话</th>
+        <th>角色</th>
+        <th>操作</th>
+      </tr>
+      </thead>
 
-<table class="table table-condensed table-hover table-strip table-content-middle">
-  <thead>
-  <tr>
-    <th>#</th>
-    <th>头像</th>
-    <th>姓名</th>
-    <th>邮箱</th>
-    <th>电话</th>
-    <th>角色</th>
-    <th>操作</th>
-  </tr>
-  </thead>
+      <tbody>
+      <%@users.each_with_index do |user, index|%>
+        <tr>
+          <td><%= index + 1%></td>
+          <td><%= gravatar_for(user) %></td>
+          <td><%=user.name%></td>
+          <td><%=user.email%></td>
+          <td><%=user.telephone%></td>
+          <td><span class="label label-success"><%=user.role%></span> </td>
 
-  <tbody>
-  <%@users.each_with_index do |user, index|%>
-    <tr>
-      <td><%= index + 1%></td>
-      <td><%= gravatar_for(user) %></td>
-      <td><%=user.name%></td>
-      <td><%=user.email%></td>
-      <td><%=user.telephone%></td>
-      <td><%=user.role%></td>
+          <td>
+            <%= link_to edit_user_path(user),
+                        class: "btn btn-default btn-sm",
+                        title: "编辑",
+                        data: {toggle: "tooltip", placement: "top"}  do %>
+              <span class="glyphicon glyphicon-edit"></span>
+            <% end %>
 
-      <td>
-        <%= link_to edit_user_path(user),
-                    class: "btn btn-default btn-sm",
-                    title: "编辑",
-                    data: {toggle: "tooltip", placement: "top"}  do %>
-          <span class="glyphicon glyphicon-edit"></span>
-        <% end %>
+            <%= link_to reset_password_user_path(user),
+                        class: "btn btn-default btn-sm",
+                        title: "重置密码",
+                        data: {toggle: "tooltip", placement: "top"} do %>
+              <span class="glyphicon glyphicon-lock"></span>
+            <% end %>
 
-        <%= link_to reset_password_user_path(user),
-                    class: "btn btn-default btn-sm",
-                    title: "重置密码",
-                    data: {toggle: "tooltip", placement: "top"} do %>
-          <span class="glyphicon glyphicon-lock"></span>
-        <% end %>
-
-        <%=link_to user_path(user),
-                   method: :delete,
-                   data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
-                   title: "删除",
-                   class: "btn btn-danger btn-sm" do %>
-          <span class="glyphicon glyphicon-remove"></span>
-        <%end%>
-      </td>
-    </tr>
-  <%end%>
-  </tbody>
-</table>
-
-<%= paginate @users %>
+            <%=link_to user_path(user),
+                       method: :delete,
+                       data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
+                       title: "删除",
+                       class: "btn btn-default bg-danger btn-sm" do %>
+              <span class="glyphicon glyphicon-remove"></span>
+            <%end%>
+          </td>
+        </tr>
+      <%end%>
+      </tbody>
+    </table>
+    <%= paginate @users %>
+  </div>
+</div>
