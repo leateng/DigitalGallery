@@ -30,7 +30,7 @@
       <% if current_user.admin? %>
         <div class="form-group">
           <%= f.label "角色" %>
-          <%= f.select :role, %w(admin operator user), {include_blank: false}, class: "form-control" %>
+          <%= f.select :role, %w(admin operator user), {include_blank: true}, class: "form-control" %>
         </div>
       <%end%>
 

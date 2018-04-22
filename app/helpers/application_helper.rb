@@ -1,6 +1,6 @@
 module ApplicationHelper
   def full_title(name = '')
-    base = 'Ruby on Rails Tutorial Sample App'
+    base = '魔扫'
     if name.blank?
       base
     else

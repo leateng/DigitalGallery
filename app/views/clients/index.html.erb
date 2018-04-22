@@ -1,20 +1,20 @@
 <%= content_for :header do%>
   <%=form_tag clients_path, class: "navbar-form navbar-left", method: :get do %>
     <div class="form-group">
-      <%= text_field_tag :search, params[:search], class: "form-control", placeholder: "姓名，邮箱，电话" %>
+      <%= text_field_tag :search, params[:search], class: "form-control header-search-input", placeholder: "姓名，邮箱，电话" %>
     </div>
   <%end%>
 <%end%>
 
 <div class="row mt-20">
-  <div class="col-md-12">
+  <div class="col-lg-12 col-md-12 col-sm-12">
     <%= link_to  new_client_path, class: 'btn btn-success pull-right' do%>
       <span class="glyphicon glyphicon-plus-sign"></span> 添加新客户
     <%end%>
   </div>
 
-  <div class="col-md-12">
-    <table class="table table-condensed table-hover table-strip table-content-middle">
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <table class="table table-condensed table-hover table-strip table-content-middle table-responsive">
       <thead>
       <tr>
         <th>#</th>

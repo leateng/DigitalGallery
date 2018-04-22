@@ -19,7 +19,10 @@ class User < ApplicationRecord
             format: { with: VALID_EMAIL_REGEX},
             uniqueness: {case_sensitive: false}
   validates :password, length: { minimum: 6 }, unless: Proc.new{|user| user.update_profile == true}
-  validates :telephone, presence: true, format: {with: VALID_TELEPHONE_REGEX}, uniqueness: true, if: Proc.new{|user| user.role == "user"}
+  validates :telephone,
+            presence: true,
+            format: {with: VALID_TELEPHONE_REGEX},
+            uniqueness: true, if: Proc.new{|user| user.role == "user"}
 
   # 普通用户
   scope :clients, ->{where(role: "user")}

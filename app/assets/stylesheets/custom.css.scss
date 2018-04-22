@@ -21,8 +21,10 @@ html {
 
 
 body {
-  padding-top: 60px;
-  background-color: #f6f6f6;
+  padding-top: 100px;
+  #background-color: #f6f6f6;
+  background-image: asset_url("bg.png");
+  background-repeat: repeat;
 }
 
 section { overflow: auto;
@@ -43,9 +45,16 @@ textarea {
 .mt-10 { margin-top: 10px;}
 .mt-20 { margin-top: 20px;}
 
-.main.container {
+.container.main {
+  background-color: #FFFFFF;
   min-height: 700px;
 }
+
+.footer.container {
+  background-color: #FFFFFF;
+  margin-bottom: 50px;
+}
+
 
 table.table-content-middle{
   tbody {
@@ -58,13 +67,7 @@ table.table-content-middle{
 
 }
 
-.navbar-default {
-  background-color: #FFFFFF;
-}
 
-.container {
-  background-color: #FFFFFF;
-}
 
 /* typography */
 
@@ -108,6 +111,42 @@ p{
     text-decoration: none;
   }
 }
+
+.header-search-input {
+  background-color: #404448;
+  color: white;
+  border: 1px solid #000000;
+}
+
+.navbar {
+  min-height: 80px;
+}
+.navbar-header {
+  min-height: 80px;
+
+  .navbar-toggle {
+    margin: 23px 15px 23px 0;
+  }
+
+  .navbar-brand {
+    height: 80px;
+
+    img {
+      width: 50px;
+      height: 50px;
+      border-radius: 5px;
+    }
+  }
+}
+.nav > li > a {
+  padding: 30px 15px;
+}
+
+.navbar-form {
+  padding: 15px;
+}
+
+
 /* footer */
 
 footer {
@@ -190,10 +229,10 @@ aside {
 
 .gravatar-sm {
   float: left;
-  margin-top: -5px;
+  margin-top: -10px;
   margin-right: 5px;
-  width: 30px;
-  border-radius: 15px;
+  width: 40px;
+  border-radius: 20px;
 }
 
 .gravatar_edit {
@@ -280,5 +319,26 @@ input {
       width:260px;
       margin-left: 80px;
     }
+  }
+}
+
+/* home */
+.carousel-inner {
+  border-radius: 10px;
+}
+
+.carousel-control {
+  border-radius: 10px;
+}
+
+.app-list {
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  .app {
+    height: 200px;
+    border: 1px solid #CDCDCD;
   }
 }
