@@ -8,6 +8,7 @@ class User < ApplicationRecord
   # 用户级别，管理员， 操作员， 普通用户
   enum role: [:admin, :operator, :user]
 
+  before_create :generate_authentication_token
   before_save { self.email = email.downcase }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -32,6 +33,19 @@ class User < ApplicationRecord
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
                BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
+  end
+
+  # 生成用于API认证的token
+  def generate_authentication_token
+    loop do
+      self.authentication_token = SecureRandom.base64(64)
+      break if !User.find_by(authentication_token: authentication_token)
+    end
+  end
+
+  def reset_auth_token!
+    generate_authentication_token
+    save
   end
 
   def images

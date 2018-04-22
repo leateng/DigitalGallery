@@ -25,4 +25,17 @@ Rails.application.routes.draw do
     end
   end
   resources :clients, constraints: { id: /\d+/ }
+
+  namespace :api do
+    namespace :v1 do
+      resources :sessions, only: [:create]
+      resources :users, only: [:index, :create, :show, :update, :destroy] do
+        member do
+          get :images
+        end
+      end
+      # 原文有 microposts, 我们现在把它注释掉
+      # resources :microposts, only: [:index, :create, :show, :update, :destroy]
+    end
+  end
 end

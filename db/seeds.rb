@@ -16,5 +16,4 @@ User.create({name: "liteng", password: "liteng@123", password_confirmation: "lit
                    email: "user#{i}@sample.com",
                    role: :user,
                    telephone: "#{10000000000 + i}"})
-  puts u.errors.inspect
 end
