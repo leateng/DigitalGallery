@@ -86,8 +86,16 @@ class UsersController < ApplicationController
       flash.now[:error] = "旧的密码输入错误！"
       render "edit_password"
     end
+  end
 
-
+  def upload_app
+    @user = User.find(params[:id])
+    #binding.pry
+    if @user.update_attribute(:app, params[:app])
+      render json: @user.to_json, status: 200
+    else
+      render json: @user.errors, status: 300
+    end
   end
 
   private

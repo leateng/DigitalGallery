@@ -20,6 +20,38 @@
 
       <dt>角色</dt>
       <dd><%= @user.role %></dd>
+
+      <dt>魔扫应用</dt>
+      <dd>
+        <% if @user.app.blank? %>
+          ---
+        <%else%>
+          <%= link_to @user.app.file.filename, @user.app.url %>
+        <%end%>
+      </dd>
+
+      <div id="fileuploader" ></div>
     </dl>
   </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    $(function(){
+        // 上传app
+        $("#fileuploader").uploadFile({
+            url: "<%=app_user_path(@user)%>",
+            fileName: "app",
+            headers: {'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content')},
+            statusBarWidth: "100%",
+            dragdropWidth: "100%",
+            dragDropStr: "<span><b>拖拽文件到此出上传</b></span>",
+            uploadButtonClass: "btn btn-success btn-sm",
+            uploadStr: "上传",
+            allowedTypes: "apk",
+            extErrorStr: "不支持此格式文件上传. 支持的文件格式为: ",
+            maxFileSize: 100 * 1024 * 1024, //10M
+            sizeErrorStr: "文件过大，上传文件最大: ",
+            maxFileCount: 1,
+        });
+    });
+</script>

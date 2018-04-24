@@ -1,7 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
   attr_accessor :update_profile
+
   mount_uploader :gravatar, GravatarUploader
+  mount_uploader :app, AppUploader
 
   has_many :attachments, dependent: :destroy
 

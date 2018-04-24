@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     member do
       get :reset_password, action: "edit_password"
       post :reset_password, action: "update_password"
+      post :app, action: "upload_app"
     end
 
     resources :attachments, constraints: { id: /\d+/ } do

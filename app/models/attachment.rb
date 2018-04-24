@@ -16,7 +16,7 @@ class Attachment < ApplicationRecord
 
   def generate_video_thumb
     movie = FFMPEG::Movie.new(self.content.path)
-    movie.screenshot(video_thumb_path, seek_time: 3, resolution: "320x200")
+    movie.screenshot(video_thumb_path, seek_time: 3, resolution: "320x240")
   end
 
   def extract_meta_info

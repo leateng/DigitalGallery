@@ -25,7 +25,7 @@
       <%@users.each_with_index do |user, index|%>
         <tr>
           <td><%= index + 1%></td>
-          <td><%= gravatar_for(user) %></td>
+          <td><%=link_to gravatar_for(user), user_path(user) %></td>
           <td><%=user.name%></td>
           <td><%=user.email%></td>
           <td><%=user.telephone%></td>
