@@ -11,7 +11,7 @@
   <% end %>
 
   <% if can? :download_assets_bundle, @user%>
-    <%= link_to user_attachments_path(@user),
+    <%= link_to assets_bundle_user_path(@user),
                 class: "btn btn-default btn-sm",
                 title: "下载照片和视频",
                 data: {toggle: "tooltip", placement: "top"} do %>

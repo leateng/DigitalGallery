@@ -18,6 +18,7 @@ Rails.application.routes.draw do
       post :reset_password, action: "update_password"
       post :app, action: "upload_app"
       get :app, action: "download_app"
+      get :assets_bundle
     end
 
     resources :attachments, constraints: { id: /\d+/ } do

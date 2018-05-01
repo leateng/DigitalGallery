@@ -121,6 +121,26 @@ class UsersController < ApplicationController
     end
   end
 
+  require 'tempfile'
+  require 'zip'
+  def assets_bundle
+    @user = User.find(params[:id])
+    Zip.default_compression = Zlib::BEST_SPEED
+
+    f = Tempfile.new
+    Zip::File.open(f.path, Zip::File::CREATE) do |zipfile|
+      @user.images.each_with_index do |image, index|
+        if image.video_id.present?
+          zipfile.add("#{index}.jpg", image.content.path)
+          zipfile.add("#{index}.mp4", image.relate_video.content.path)
+        end
+      end
+      zipfile.get_output_stream("targets.json") { |f| f.write @user.targets_json.to_s }
+    end
+
+    send_file f.path, filename: "#{@user.name}-image-pack.zip", type: "application/zip"
+  end
+
   private
 
   def user_params

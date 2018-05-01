@@ -57,4 +57,14 @@ class User < ApplicationRecord
   def videos
     attachments.where(content_type:"mp4")
   end
+
+  def targets_json
+    h = {}
+    h["images"] = []
+    self.images.each_with_index do |image, index|
+      h["images"] << {"image" => "#{index}.jpg", "name" => "#{index}", "uid" => "uid#{index}"}
+    end
+
+    h
+  end
 end
