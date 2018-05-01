@@ -24,11 +24,11 @@ class Api::V1::BaseController < ActionController::Base
 
   def authenticate_user!
     # header format
-    # Authorization:Token token={token_str}, email=root@sample.com
+    # Authorization:Token token={token_str}, telephone=12345678903
 
     token, options = ActionController::HttpAuthentication::Token.token_and_options(request)
-    user_email = options.blank? ? nil : options[:email]
-    user = user_email && User.find_by(email: user_email)
+    user_telephone = options.blank? ? nil : options[:telephone]
+    user = user_telephone && User.find_by(telephone: user_telephone)
 
     if user && ActiveSupport::SecurityUtils.secure_compare(user.authentication_token, token)
       self.current_user = user

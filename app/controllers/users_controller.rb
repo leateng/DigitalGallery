@@ -115,7 +115,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
 
     if @user.nil? || @user.app.blank?
-      render  file: "/404.html", status: 404
+      render  "errors/404", status: 404
     else
       send_file @user.app.path, filename: "moosao.apk", content_type: "application/vnd.android.package-archive"
     end
