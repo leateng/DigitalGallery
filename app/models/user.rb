@@ -25,7 +25,7 @@ class User < ApplicationRecord
   validates :telephone,
             presence: true,
             format: {with: VALID_TELEPHONE_REGEX},
-            uniqueness: true, if: Proc.new{|user| user.role == "user"}
+            uniqueness: true
 
   # 普通用户
   scope :clients, ->{where(role: "user")}

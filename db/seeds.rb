@@ -6,8 +6,19 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create({name: "root", password: "root@123", password_confirmation: "root@123", email: "root@sample.com", role: :admin})
-User.create({name: "liteng", password: "liteng@123", password_confirmation: "liteng@123", email: "liteng@sample.com", role: :operator})
+User.create({name: "root",
+             password: "root@123",
+             password_confirmation: "root@123",
+             email: "root@sample.com",
+             telephone: 12345678901,
+             role: :admin})
+
+User.create({name: "liteng",
+             password: "liteng@123",
+             password_confirmation: "liteng@123",
+             email: "liteng@sample.com",
+             telephone: 12345678902,
+             role: :operator})
 
 100.times do |i|
   u = User.create({name: "user#{i}",
