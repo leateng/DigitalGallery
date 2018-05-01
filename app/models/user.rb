@@ -17,15 +17,16 @@ class User < ApplicationRecord
   VALID_TELEPHONE_REGEX = /\A\d{11}\z/i
 
   validates :name, presence: true, length: { maximum: 50 }
-  validates :email, presence: true,
+  validates :email,
             length: { maximum: 255},
             format: { with: VALID_EMAIL_REGEX},
-            uniqueness: {case_sensitive: false}
+            uniqueness: {case_sensitive: false}, if: Proc.new{|user| user.email.present?}
   validates :password, length: { minimum: 6 }, unless: Proc.new{|user| user.update_profile == true}
   validates :telephone,
             presence: true,
             format: {with: VALID_TELEPHONE_REGEX},
             uniqueness: true
+
 
   # 普通用户
   scope :clients, ->{where(role: "user")}

@@ -25,11 +25,11 @@ class UsersController < ApplicationController
   end
 
   def create
-    authorize! :create, User
     @user = User.new(user_params)
+    @user.role = "user"
     if @user.save
       log_in @user
-      flash[:success] = "Welcome to the sample App!"
+      flash[:success] = "欢迎登陆魔扫应用!"
       redirect_to @user
     else
       render "new"
