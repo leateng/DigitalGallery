@@ -1,40 +1,48 @@
 <% provide :title, @user.name %>
 
 <div class="pull-right mt-20">
-  <%= link_to user_attachments_path(@user),
-              class: "btn btn-default btn-sm",
-              title: "上传照片和视频",
-              data: {toggle: "tooltip", placement: "top"} do %>
-    <span class="glyphicon glyphicon-upload"></span>
+  <% if can? :visit_assets, @user%>
+    <%= link_to user_attachments_path(@user),
+                class: "btn btn-default btn-sm",
+                title: "上传照片和视频",
+                data: {toggle: "tooltip", placement: "top"} do %>
+      <span class="glyphicon glyphicon-upload"></span>
+    <% end %>
   <% end %>
 
-  <%= link_to user_attachments_path(@user),
-              class: "btn btn-default btn-sm",
-              title: "下载照片和视频",
-              data: {toggle: "tooltip", placement: "top"} do %>
-    <span class="glyphicon glyphicon-download-alt"></span>
+  <% if can? :download_assets_bundle, @user%>
+    <%= link_to user_attachments_path(@user),
+                class: "btn btn-default btn-sm",
+                title: "下载照片和视频",
+                data: {toggle: "tooltip", placement: "top"} do %>
+      <span class="glyphicon glyphicon-download-alt"></span>
+    <% end %>
   <% end %>
 
-  <%= link_to edit_user_path(@user),
-              class: "btn btn-default btn-sm",
-              title: "编辑用户信息",
-              data: {toggle: "tooltip", placement: "top"} do %>
-    <span class="glyphicon glyphicon-edit"></span>
+  <% if can? :update, @user%>
+    <%= link_to edit_user_path(@user),
+                class: "btn btn-default btn-sm",
+                title: "编辑用户信息",
+                data: {toggle: "tooltip", placement: "top"} do %>
+      <span class="glyphicon glyphicon-edit"></span>
+    <% end %>
+
+    <%= link_to reset_password_user_path(@user),
+                class: "btn btn-default btn-sm",
+                title: "重置此用户密码",
+                data: {toggle: "tooltip", placement: "top"} do %>
+      <span class="glyphicon glyphicon-lock"></span>
+    <% end %>
   <% end %>
 
-  <%= link_to reset_password_user_path(@user),
-              class: "btn btn-default btn-sm",
-              title: "重置此用户密码",
-              data: {toggle: "tooltip", placement: "top"} do %>
-    <span class="glyphicon glyphicon-lock"></span>
-  <% end %>
-
-  <%= link_to user_path(@user),
-              method: :delete,
-              data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
-              title: "删除此用户",
-              class: "btn btn-default bg-danger btn-sm" do %>
-    <span class="glyphicon glyphicon-remove"></span>
+  <% if can? :delete, @user%>
+    <%= link_to user_path(@user),
+                method: :delete,
+                data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
+                title: "删除此用户",
+                class: "btn btn-default bg-danger btn-sm" do %>
+      <span class="glyphicon glyphicon-remove"></span>
+    <% end %>
   <% end %>
 </div>
 
@@ -72,7 +80,9 @@
             <% else %>
               <%= link_to @user.app.file.filename, @user.app.url %>
             <% end %>
-            <div id="fileuploader"></div>
+            <%if can? :upload_app, @user%>
+              <div id="fileuploader"></div>
+            <%end%>
           </td>
         </tr>
       </table>

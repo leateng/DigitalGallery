@@ -20,7 +20,7 @@
       <ul class="nav navbar-nav">
         <li class="<%='active' if current_page?(controller: 'static_pages', action: 'home')%>"><%= link_to "首页", root_path %></li>
 
-        <% if can? :operate, User %>
+        <% if can? :list_clients, User %>
           <li class="<%= 'active' if current_page?(controller: 'clients', action: 'index') %>"><%= link_to "客户", clients_path %></li>
         <% end %>
 

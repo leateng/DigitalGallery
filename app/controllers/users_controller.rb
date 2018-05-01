@@ -10,10 +10,13 @@ class UsersController < ApplicationController
     end
 
     @users = @users.page(params[:page]).per(15)
+    authorize! :list, @users
   end
 
   def show
     @user = User.find(params[:id])
+
+    authorize! :read, @user
   end
 
   def new
@@ -21,6 +24,7 @@ class UsersController < ApplicationController
   end
 
   def create
+    authorize! :create, User
     @user = User.new(user_params)
     if @user.save
       log_in @user
@@ -32,18 +36,20 @@ class UsersController < ApplicationController
   end
 
   def edit
+
     @user = User.find(params[:id])
   end
 
   def update
     @user = User.find(params[:id])
-    if @user.update({name: params[:user][:name],
-                     email: params[:user][:email],
-                     telephone: params[:user][:telephone],
-                     gravatar: params[:user][:gravatar],
-                     role: params[:user][:role],
-                     update_profile: true})
+    attrs = {name: params[:user][:name],
+             email: params[:user][:email],
+             telephone: params[:user][:telephone],
+             gravatar: params[:user][:gravatar],
+             update_profile: true}
+    attrs[:role] = params[:user][:role] if current_user.admin?
 
+    if @user.update(attrs)
       flash[:success] = "用户#{@user.name}信息已成功更新！"
       redirect_to user_path(@user)
     else
@@ -61,10 +67,10 @@ class UsersController < ApplicationController
       flash[:error] = "用户#{@user.name}删除失败！"
     end
 
-    if params[:from] == "clients"
-      redirect_to clients_path
-    else
+    if current_user.admin?
       redirect_to users_path
+    else
+      redirect_to clients_path
     end
 
     #redirect_back fallback_location: users_path

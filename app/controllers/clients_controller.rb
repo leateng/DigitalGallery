@@ -15,6 +15,7 @@ class ClientsController < ApplicationController
     end
 
     @users = @users.page(params[:page]).per(15)
+    authorize! :list_clients, User
   end
 
   def show

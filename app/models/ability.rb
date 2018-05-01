@@ -33,11 +33,17 @@ class Ability
     if user.admin?
       can :manage, :all
     elsif user.operator?
-      can :manage, User, :role => [:user]
-      can :operate, User
+      can :list_clients, User
+      can :read, User
       can :create, User
+      can :update, User
+      can :upload_app, User
+      can :visit_assets, User
+      can :download_assets, User
+      can :download_assets_bundle, User
     elsif user.user?
       can :read, User, :id => user.id
+      can :update, User, :id => user.id
     end
   end
 end
