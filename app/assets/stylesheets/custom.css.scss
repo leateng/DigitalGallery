@@ -332,13 +332,17 @@ input {
 }
 
 .app-list {
-  background-color: #FFFFFF;
-  border-radius: 10px;
+  #background-color: #FFFFFF;
+  #border-radius: 10px;
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-left: -30px;
+  margin-right: -30px;
 
   .app {
     height: 200px;
-    border: 1px solid #CDCDCD;
+    background-color: white;
+    padding: 10px;
+    #border: 1px solid #CDCDCD;
   }
 }
