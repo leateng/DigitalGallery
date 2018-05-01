@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_action :check_login, only: [:new, :create]
+  skip_before_action :check_login, only: [:new, :create, :download_app]
 
   def index
     s_text = params[:search]
