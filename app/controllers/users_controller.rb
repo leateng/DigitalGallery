@@ -10,6 +10,7 @@ class UsersController < ApplicationController
     end
 
     @users = @users.page(params[:page]).per(15)
+    puts @users.size
     authorize! :list, @users
   end
 
