@@ -7,7 +7,7 @@ class Attachment < ApplicationRecord
   before_save :extract_meta_info
   before_save :set_content_type
   after_save :generate_video_thumb
-  after_destroy :delete_video_thumb
+  after_destroy :delete_thumb
 
 
   def creator
@@ -70,6 +70,14 @@ class Attachment < ApplicationRecord
     end
   end
 
+  def thumb_path
+    if self.video?
+      video_thumb_path
+    else
+      self.content.thumb.path
+    end
+  end
+
   def video_thumb_path
     video_path = content.path
     File.join(File.dirname(video_path), File.basename(video_path).split('.').first + ".jpg")
@@ -80,8 +88,8 @@ class Attachment < ApplicationRecord
     File.join(File.dirname(video_url), File.basename(video_url).split('.').first + ".jpg")
   end
 
-  def delete_video_thumb
-    FileUtils.rm(video_thumb_path) if File.exist?(video_thumb_path)
+  def delete_thumb
+    FileUtils.rm(thumb_path) if File.exist?(thumb_path)
   end
 
   def relate_video

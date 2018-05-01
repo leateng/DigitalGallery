@@ -1,8 +1,50 @@
 <% provide :title, @user.name %>
+
+<div class="pull-right mt-20">
+  <%= link_to user_attachments_path(@user),
+              class: "btn btn-default btn-sm",
+              title: "上传照片和视频",
+              data: {toggle: "tooltip", placement: "top"} do %>
+    <span class="glyphicon glyphicon-upload"></span>
+  <% end %>
+
+  <%= link_to user_attachments_path(@user),
+              class: "btn btn-default btn-sm",
+              title: "下载照片和视频",
+              data: {toggle: "tooltip", placement: "top"} do %>
+    <span class="glyphicon glyphicon-download-alt"></span>
+  <% end %>
+
+  <%= link_to edit_user_path(@user),
+              class: "btn btn-default btn-sm",
+              title: "编辑用户信息",
+              data: {toggle: "tooltip", placement: "top"} do %>
+    <span class="glyphicon glyphicon-edit"></span>
+  <% end %>
+
+  <%= link_to reset_password_user_path(@user),
+              class: "btn btn-default btn-sm",
+              title: "重置此用户密码",
+              data: {toggle: "tooltip", placement: "top"} do %>
+    <span class="glyphicon glyphicon-lock"></span>
+  <% end %>
+
+  <%= link_to user_path(@user),
+              method: :delete,
+              data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
+              title: "删除此用户",
+              class: "btn btn-default bg-danger btn-sm" do %>
+    <span class="glyphicon glyphicon-remove"></span>
+  <% end %>
+</div>
+
 <div class="row">
   <div class="col-md-12  mt-20">
     <div class="panel panel-default">
-      <div class="panel-heading"> <span class="glyphicon glyphicon-user"></span> 用户信息</div>
+      <div class="panel-heading">
+        <span class="glyphicon glyphicon-user"></span> 用户信息
+      </div>
+
       <table class="table">
         <tr>
           <td rowspan="4" style="width: 20%;">
@@ -11,19 +53,19 @@
             </h1>
             <h3 class="text-center"><%= @user.name %></h3>
           </td>
-          <th>邮箱</th>
+          <th><span class="glyphicon glyphicon-envelope"></span> 邮箱</th>
           <td><%= @user.email %></td>
         </tr>
         <tr>
-          <th>电话</th>
+          <th><span class="glyphicon glyphicon-phone"></span> 电话</th>
           <td><%= @user.telephone %></td>
         </tr>
         <tr>
-          <th>角色</th>
+          <th><span class="glyphicon glyphicon-user"></span> 角色</th>
           <td><%= @user.role %></td>
         </tr>
         <tr>
-          <th>魔扫应用</th>
+          <th><span class="glyphicon glyphicon-apple"></span> 魔扫应用</th>
           <td>
             <% if @user.app.blank? %>
               ---

@@ -4,11 +4,17 @@ class ClientsController < ApplicationController
   def index
     s_text = params[:search]
     if s_text.blank?
-      @users = User.clients.includes(:attachments).all.page(params[:page]).per(15)
+      @users = User.clients.includes(:attachments).all
     else
       s_text.strip!
-      @users = User.clients.includes(:attachments).where("name=? or email=? or telephone=?", s_text, s_text, s_text).page(params[:page])
+      @users = User.clients.includes(:attachments).where("name=? or email=? or telephone=?", s_text, s_text, s_text)
     end
+
+    if params[:app].present?
+      @users = @users.where("app is not NULL")
+    end
+
+    @users = @users.page(params[:page]).per(15)
   end
 
   def show

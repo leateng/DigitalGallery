@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   def index
     s_text = params[:search]
     if !s_text.blank?
-      @users = User.where("name=? or email=? or telephone=?", s_text, s_text, s_text)
+      @users = User.where("name=? or email=? or telephone=? or role=?", s_text, s_text, s_text, s_text)
     else
       @users = User.all
     end
@@ -61,7 +61,13 @@ class UsersController < ApplicationController
       flash[:error] = "用户#{@user.name}删除失败！"
     end
 
-    redirect_back fallback_location: users_path
+    if params[:from] == "clients"
+      redirect_to clients_path
+    else
+      redirect_to users_path
+    end
+
+    #redirect_back fallback_location: users_path
   end
 
   def edit_password

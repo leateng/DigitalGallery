@@ -1,8 +1,16 @@
 <%= content_for :header do%>
   <%=form_tag clients_path, class: "navbar-form navbar-left", method: :get do %>
+    <div class="checkbox">
+      <label style="color: #999999;">
+        <input type="checkbox" name="app" <%="checked" if params[:app].present?%>> APP
+      </label>
+    </div>
+
     <div class="form-group">
       <%= text_field_tag :search, params[:search], class: "form-control header-search-input", placeholder: "姓名，邮箱，电话" %>
     </div>
+
+    <%= submit_tag "Search", class: "btn btn-default"%>
   <%end%>
 <%end%>
 
@@ -45,21 +53,6 @@
                         data: {toggle: "tooltip", placement: "top"} do %>
               <span class="glyphicon glyphicon-upload"></span>
             <% end %>
-
-            <%= link_to edit_user_path(user),
-                        class: "btn btn-default btn-sm",
-                        title: "编辑",
-                        data: {toggle: "tooltip", placement: "top"}  do %>
-              <span class="glyphicon glyphicon-edit"></span>
-            <% end %>
-
-            <%=link_to client_path(user),
-                       method: :delete,
-                       data: {confirm: "确认删除用户所有数据？", toggle: "tooltip", placement: "top"},
-                       title: "删除",
-                       class: "btn btn-default bg-danger btn-sm" do %>
-              <span class="glyphicon glyphicon-remove"></span>
-            <%end%>
           </td>
         </tr>
       <%end%>

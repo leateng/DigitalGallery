@@ -51,10 +51,10 @@ class User < ApplicationRecord
   end
 
   def images
-    attachments.select{|a| a.content_type == "jpeg"}
+    attachments.where(content_type:"jpeg")
   end
 
   def videos
-    attachments.select{|a| a.content_type == "mp4"}
+    attachments.where(content_type:"mp4")
   end
 end
