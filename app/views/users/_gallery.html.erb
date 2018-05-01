@@ -1,0 +1,43 @@
+<div>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active">
+      <a href="#images" aria-controls="images" role="tab" data-toggle="tab">
+        <span class="glyphicon glyphicon-picture"> Photos
+      </a>
+    </li>
+
+    <li role="presentation">
+      <a href="#videos" aria-controls="videos" role="tab" data-toggle="tab">
+      <span class="glyphicon glyphicon-film"></span> Videos
+      </a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content mt-20">
+    <div role="tabpanel" class="tab-pane fade in active" id="images">
+      <div class="row">
+        <% @user.images.each do |image| %>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <%= image_tag image.thumb_url %>
+            </a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+
+    <div role="tabpanel" class="tab-pane fade" id="videos">
+      <div class="row">
+        <% @user.videos.each do |video| %>
+          <div class="col-xs-6 col-md-3">
+            <a href="#" class="thumbnail">
+              <%= image_tag video.thumb_url %>
+            </a>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

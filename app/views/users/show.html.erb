@@ -1,37 +1,46 @@
 <% provide :title, @user.name %>
+<div class="row">
+  <div class="col-md-12  mt-20">
+    <div class="panel panel-default">
+      <div class="panel-heading"> <span class="glyphicon glyphicon-user"></span> 用户信息</div>
+      <table class="table">
+        <tr>
+          <td rowspan="4" style="width: 20%;">
+            <h1 class="text-center">
+              <%= gravatar_for @user, "garavatar gravatar-lg" %>
+            </h1>
+            <h3 class="text-center"><%= @user.name %></h3>
+          </td>
+          <th>邮箱</th>
+          <td><%= @user.email %></td>
+        </tr>
+        <tr>
+          <th>电话</th>
+          <td><%= @user.telephone %></td>
+        </tr>
+        <tr>
+          <th>角色</th>
+          <td><%= @user.role %></td>
+        </tr>
+        <tr>
+          <th>魔扫应用</th>
+          <td>
+            <% if @user.app.blank? %>
+              ---
+            <% else %>
+              <%= link_to @user.app.file.filename, @user.app.url %>
+            <% end %>
+            <div id="fileuploader"></div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div>
 
 <div class="row">
-  <aside class="col-md-3">
-    <section class="user_info">
-      <h1 class="text-right">
-        <%= gravatar_for @user, "garavatar gravatar-lg" %>
-      </h1>
-    </section>
-  </aside>
-  <div class="col-md-9 text-left">
-    <h1 class="text-left"><%= @user.name %></h1>
-
-    <dl>
-      <dt>邮箱</dt>
-      <dd><%= @user.email%></dd>
-
-      <dt>电话</dt>
-      <dd><%= @user.telephone || "---" %></dd>
-
-      <dt>角色</dt>
-      <dd><%= @user.role %></dd>
-
-      <dt>魔扫应用</dt>
-      <dd>
-        <% if @user.app.blank? %>
-          ---
-        <%else%>
-          <%= link_to @user.app.file.filename, @user.app.url %>
-        <%end%>
-      </dd>
-
-      <div id="fileuploader" ></div>
-    </dl>
+  <div class="col-md-12 col-sm-12 col-lg-12">
+    <%= render partial: "gallery" %>
   </div>
 </div>
 
