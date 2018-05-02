@@ -1,6 +1,6 @@
 class Api::V1::SessionsController <  Api::V1::BaseController
   def create
-    @user = User.find_by(telephone: create_params[:telephone].downcase)
+    @user = User.find_by(telephone: create_params[:telephone])
 
     if @user && @user.authenticate(create_params[:password])
       self.current_user = @user
