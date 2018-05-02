@@ -10,7 +10,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*
 /tmp/*
-/.idea/*
+.idea/
 !/log/.keep
 !/tmp/.keep
 
