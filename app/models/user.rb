@@ -63,7 +63,7 @@ class User < ApplicationRecord
     h = {}
     h["images"] = []
     self.images.each_with_index do |image, index|
-      h["images"] << {"image" => "#{index}.jpg", "name" => "#{index}", "uid" => "uid#{index}"}
+      h["images"] << {"image" => "#{index}.jpg", "name" => "#{index}", "uid" => "#{index}"}
     end
 
     h

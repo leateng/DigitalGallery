@@ -135,7 +135,7 @@ class UsersController < ApplicationController
           zipfile.add("#{index}.mp4", image.relate_video.content.path)
         end
       end
-      zipfile.get_output_stream("targets.json") { |f| f.write @user.targets_json.to_s }
+      zipfile.get_output_stream("targets.json") { |f| f.write @user.targets_json.to_json }
     end
 
     send_file f.path, filename: "#{@user.name}-image-pack.zip", type: "application/zip"
