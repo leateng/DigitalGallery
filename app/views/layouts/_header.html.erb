@@ -21,11 +21,11 @@
         <li class="<%='active' if current_page?(controller: 'static_pages', action: 'home')%>"><%= link_to "首页", root_path %></li>
 
         <% if can? :list_clients, User %>
-          <li class="<%= 'active' if current_page?(controller: 'clients', action: 'index') %>"><%= link_to "客户", clients_path %></li>
+          <li class="<%= 'active' if current_page?(controller: 'users', action: 'index') && params[:role] == 'client' %>"><%= link_to "客户", users_path(role: "client") %></li>
         <% end %>
 
         <%if can? :manage, User %>
-          <li class="<%='active' if current_page?(controller: 'users', action: 'index')%>"><%= link_to "管理", users_path %></li>
+          <li class="<%='active' if current_page?(controller: 'users', action: 'index') && params[:role] == 'all' %>"><%= link_to "管理", users_path(role: "all") %></li>
         <%end%>
       </ul>
 

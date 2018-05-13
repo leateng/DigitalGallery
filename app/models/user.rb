@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :attachments, dependent: :destroy
 
   # 用户级别，管理员， 操作员， 普通用户
-  enum role: [:admin, :operator, :user]
+  enum role: [:admin, :operator, :client]
 
   before_create :generate_authentication_token
   before_save { self.email = email.downcase }
@@ -28,8 +28,14 @@ class User < ApplicationRecord
             uniqueness: true
 
 
+  # 管理员
+  scope :admins, ->{where(role: "root")}
+
+  # 操作员
+  scope :operators, ->{where(role: "operator")}
+
   # 普通用户
-  scope :clients, ->{where(role: "user")}
+  scope :clients, ->{where(role: "client")}
 
   # 返回指定字符串的哈希摘要
   def self.digest(string)

@@ -2,15 +2,18 @@ class UsersController < ApplicationController
   skip_before_action :check_login, only: [:new, :create, :download_app]
 
   def index
-    s_text = params[:search]
-    if !s_text.blank?
-      @users = User.where("name=? or email=? or telephone=? or role=?", s_text, s_text, s_text, s_text)
-    else
-      @users = User.all
+    role = params[:role]
+    if role != "all"
+      if User.roles.keys.include?(role)
+        role = params[:role].pluralize
+      else
+        redirect_to users_path(role: 'client')
+        return
+      end
     end
 
-    @users = @users.page(params[:page]).per(15)
-    authorize! :list, @users
+    @users = filter_users(User.send(role)).page(params[:page]).per(15)
+    authorize! :read, @users
   end
 
   def show
@@ -20,15 +23,21 @@ class UsersController < ApplicationController
   end
 
   def new
-    @user = User.new
+    @user = User.new(role: "client")
   end
 
   def create
+    set_password_for_client if params[:build_client].present?
     @user = User.new(user_params)
-    @user.role = "user"
+    @user.role = "client"
     if @user.save
-      log_in @user
-      flash[:success] = "欢迎登陆魔扫应用!"
+      if params[:build_client].present?
+        flash[:success] = "创建客户#{@user.name}成功"
+      else
+        log_in @user
+        flash[:success] = "欢迎登陆魔扫应用!"
+      end
+
       redirect_to @user
     else
       render "new"
@@ -36,7 +45,6 @@ class UsersController < ApplicationController
   end
 
   def edit
-
     @user = User.find(params[:id])
   end
 
@@ -74,11 +82,6 @@ class UsersController < ApplicationController
     end
 
     #redirect_back fallback_location: users_path
-  end
-
-  # 客户列表页面
-  def clients
-    @users = User.clients.page(params[:page]).per(15)
   end
 
   def edit_password
@@ -156,5 +159,25 @@ class UsersController < ApplicationController
                                  :password_confirmation,
                                  :gravatar,
                                  :telephone)
+  end
+
+  # 为operator创建的新客户账号设定默认密码
+  def set_password_for_client
+    params[:user][:password] = params[:user][:telephone] + "@123"
+    params[:user][:password_confirmation] = params[:user][:telephone] + "@123"
+  end
+
+  # 搜索用户
+  def filter_users(users)
+    s_text = params[:search]
+    users = users.where("name=? or email=? or telephone=? ", s_text, s_text, s_text) if s_text.present?
+    if params[:app].present?
+      if params[:app] == "on"
+        users = users.where("app is not NULL")
+      else
+        users = users.where("app is NULL")
+      end
+    end
+    users
   end
 end

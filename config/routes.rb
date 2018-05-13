@@ -13,10 +13,6 @@ Rails.application.routes.draw do
 
 
   resources :users, constraints: { id: /\d+/ } do
-    collection do
-      get :clients
-    end
-
     member do
       get :reset_password, action: "edit_password"
       post :reset_password, action: "update_password"

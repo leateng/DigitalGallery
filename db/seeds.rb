@@ -25,6 +25,6 @@ User.create({name: "liteng",
                    password: "user#{i}@123",
                    password_confirmation: "user#{i}@123",
                    email: "user#{i}@sample.com",
-                   role: :user,
+                   role: :client,
                    telephone: "#{10000000000 + i}"})
 end
