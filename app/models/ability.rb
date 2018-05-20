@@ -41,7 +41,7 @@ class Ability
       can :visit_assets, User
       can :download_assets, User
       can :download_assets_bundle, User
-    elsif user.user?
+    elsif user.client?
       can :read, User, :id => user.id
       can :update, User, :id => user.id
     end

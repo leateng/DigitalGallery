@@ -16,16 +16,17 @@ class User < ApplicationRecord
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_TELEPHONE_REGEX = /\A\d{11}\z/i
 
-  validates :name, presence: true, length: { maximum: 50 }
-  validates :email,
-            length: { maximum: 255},
-            format: { with: VALID_EMAIL_REGEX},
-            uniqueness: {case_sensitive: false}, if: Proc.new{|user| user.email.present?}
+  validates :name, presence: true, uniqueness: true, length: { maximum: 50 }
   validates :password, length: { minimum: 6 }, unless: Proc.new{|user| user.update_profile == true}
-  validates :telephone,
-            presence: true,
-            format: {with: VALID_TELEPHONE_REGEX},
-            uniqueness: true
+
+  # validates :email,
+  #           length: { maximum: 255},
+  #           format: { with: VALID_EMAIL_REGEX},
+  #           uniqueness: {case_sensitive: false}, if: Proc.new{|user| user.email.present?}
+  # validates :telephone,
+  #           presence: true,
+  #           format: {with: VALID_TELEPHONE_REGEX},
+  #           uniqueness: true
 
 
   # 管理员
