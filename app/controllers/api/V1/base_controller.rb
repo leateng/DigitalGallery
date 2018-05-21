@@ -27,8 +27,8 @@ class Api::V1::BaseController < ActionController::Base
     # Authorization:Token token={token_str}, telephone=12345678903
 
     token, options = ActionController::HttpAuthentication::Token.token_and_options(request)
-    user_telephone = options.blank? ? nil : options[:telephone]
-    user = user_telephone && User.find_by(telephone: user_telephone)
+    user_name = options.blank? ? nil : options[:name]
+    user = user_name && User.find_by(name: user_name)
 
     if user && ActiveSupport::SecurityUtils.secure_compare(user.authentication_token, token)
       self.current_user = user

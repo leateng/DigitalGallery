@@ -11,7 +11,8 @@ class User < ApplicationRecord
   enum role: [:admin, :operator, :client]
 
   before_create :generate_authentication_token
-  before_save { self.email = email.downcase }
+  before_save { self.password_text = self.password if self.password.present? }
+  # before_save { self.email = email.downcase }
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   VALID_TELEPHONE_REGEX = /\A\d{11}\z/i

@@ -1,13 +1,12 @@
 <%= render partial: "search_bar" %>
 
 <div class="row mt-20">
-  <%if params[:role] == 'client'%>
-    <div class="col-lg-12 col-md-12 col-sm-12">
-      <%= link_to new_user_path(build_client: true), class: 'btn btn-success pull-right' do %>
-        <span class="glyphicon glyphicon-plus-sign"></span> 添加新客户
-      <% end %>
-    </div>
-  <% end %>
+
+  <div class="col-lg-12 col-md-12 col-sm-12">
+    <%= link_to new_user_path(build_client: true), class: 'btn btn-success pull-right' do %>
+      <span class="glyphicon glyphicon-plus-sign"></span> 添加新客户
+    <% end %>
+  </div>
 
   <div class="col-md-12">
     <table class="table table-responsive table-condensed table-hover table-strip table-content-middle">
@@ -16,13 +15,13 @@
         <th>#</th>
         <th>头像</th>
         <th>姓名</th>
-        <th>邮箱</th>
-        <%if params[:role] == 'all'%><th>电话</th><%end%>
+        <%if current_user.admin? %><th>密码</th><%end%>
+        <th>订单号</th>
         <th>照片数</th>
         <th>视频数</th>
         <th>APP</th>
-        <%if params[:role] == 'all'%><th>角色</th><%end%>
-        <%if params[:role] == 'client'%><th>操作</th><%end%>
+        <%if current_user.admin? %><th>角色</th><%end%>
+        <th>操作</th>
       </tr>
       </thead>
 
@@ -32,13 +31,12 @@
           <td><%= index + 1 %></td>
           <td><%= link_to gravatar_for(user), user_path(user) %></td>
           <td><%= user.name %></td>
-          <td><%= user.email %></td>
-          <%if params[:role] == 'all'%><td><%= user.telephone %></td><%end%>
+          <%if current_user.admin? %><td><%= user.password_text %></td><%end%>
+          <td><%= user.order_id %></td>
           <td><%= user.images.count %></td>
           <td><%= user.videos.count %></td>
           <td><%= "<span class='glyphicon glyphicon-phone'></span>".html_safe if user.app.present? %></td>
-          <%if params[:role] == 'all'%><th><%= label_for user %></th><%end%>
-          <%if params[:role] == 'client'%>
+          <%if current_user.admin? %><th><%= label_for user %></th><%end%>
           <td>
             <%= link_to user_attachments_path(user),
                         class: "btn btn-default btn-sm",
@@ -47,7 +45,6 @@
               <span class="glyphicon glyphicon-upload"></span>
             <% end %>
           </td>
-          <% end %>
         </tr>
       <%end%>
       </tbody>

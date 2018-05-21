@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180424122752) do
+ActiveRecord::Schema.define(version: 20180521144629) do
 
   create_table "attachments", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "content"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20180424122752) do
     t.string "gravatar"
     t.string "authentication_token"
     t.string "app"
+    t.string "password_text"
+    t.string "order_id"
   end
 
 end

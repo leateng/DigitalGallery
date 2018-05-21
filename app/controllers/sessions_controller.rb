@@ -5,7 +5,7 @@ class SessionsController < ApplicationController
   end
 
   def create
-    user = User.find_by( telephone: params[:session][:name] )
+    user = User.find_by( name: params[:session][:name] )
     if user && user.authenticate(params[:session][:password])
       log_in user
 
@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
       when "user"
         redirect_to user
       when "operator"
-        redirect_to clients_path
+        redirect_to users_path(role: "client")
       when "admin"
         redirect_to root_path
       else

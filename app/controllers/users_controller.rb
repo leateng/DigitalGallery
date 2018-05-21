@@ -1,25 +1,18 @@
 class UsersController < ApplicationController
+  load_and_authorize_resource
   skip_before_action :check_login, only: [:new, :create, :download_app]
 
   def index
-    role = params[:role]
-    if role != "all"
-      if User.roles.keys.include?(role)
-        role = params[:role].pluralize
-      else
-        redirect_to users_path(role: 'client')
-        return
-      end
+    if current_user.admin?
+      users = User.all
+    else
+      users = User.clients
     end
-
-    @users = filter_users(User.send(role)).page(params[:page]).per(15)
-    authorize! :read, @users
+    @users = filter_users(users).page(params[:page]).per(15)
   end
 
   def show
     @user = User.find(params[:id])
-
-    authorize! :read, @user
   end
 
   def new
@@ -126,7 +119,7 @@ class UsersController < ApplicationController
       render  "errors/404", status: 404
     else
       response.headers['Content-Length'] = @user.app.size.to_s
-      send_file @user.app.path, filename: "moosao.apk", content_type: "application/vnd.android.package-archive", x_sendfile: true
+      send_file @user.app.path, filename: "prettybaby.apk", content_type: "application/vnd.android.package-archive", x_sendfile: true
     end
   end
 
@@ -158,19 +151,21 @@ class UsersController < ApplicationController
                                  :password,
                                  :password_confirmation,
                                  :gravatar,
-                                 :telephone)
+                                 :telephone,
+                                 :order_id)
   end
 
   # 为operator创建的新客户账号设定默认密码
   def set_password_for_client
-    params[:user][:password] = params[:user][:telephone] + "@123"
-    params[:user][:password_confirmation] = params[:user][:telephone] + "@123"
+    random_password = SecureRandom.hex(3)
+    params[:user][:password] = random_password
+    params[:user][:password_confirmation] = random_password
   end
 
   # 搜索用户
   def filter_users(users)
     s_text = params[:search]
-    users = users.where("name=? or email=? or telephone=? ", s_text, s_text, s_text) if s_text.present?
+    users = users.where("name like ? or order_id like ?", s_text+'%', s_text+'%') if s_text.present?
     if params[:app].present?
       if params[:app] == "on"
         users = users.where("app is not NULL")
