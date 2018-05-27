@@ -260,15 +260,12 @@ input {
 }
 
 /* uploader */
-.uploader {
-  //position: fixed;
+#fileuploader {
   background-color: #f7f7f9;
   min-height: 89px;
-  //width: 380px;
   border-radius: 4px;
-
   .ajax-upload-dragdrop {
-    padding: 10px;
+    padding: 5px;
     .btn {
       margin-right: 10px;
     }
