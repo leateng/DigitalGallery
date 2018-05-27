@@ -340,16 +340,14 @@
 
         // 更新照片关联的视频
         $(".video-select a").on("click", function(e){
-            //$.post("");
             var $link = $(this);
             var url = $(this).data("url");
             var jqxhr = $.post(url, function (resp) {
-                toastr.success(resp["message"])
-                console.log($link.parent().parent().parent().children(".btn").html(resp['video_title'] + '<span class="caret"></span>' ))
+                $link.parent().parent().parent().children(".btn").html(resp['video_title'] + '<span class="caret"></span>' );
+                toastr.success(resp["message"]);
             })
               .fail(function (resp) {
-                  console.log(resp)
-                  toastr.error(resp["message"] || "更新失败")
+                  toastr.error(resp["message"] || "更新失败");
               });
         });
     });
