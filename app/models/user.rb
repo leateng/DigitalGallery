@@ -71,7 +71,7 @@ class User < ApplicationRecord
     h = {}
     h["images"] = []
     self.images.each_with_index do |image, index|
-      h["images"] << {"image" => "#{index}.jpg", "name" => "#{index}", "uid" => "#{index}"}
+      h["images"] << {"image" => "#{index}.jpg", "name" => "#{index}", "uid" => "#{index}"} if image.video_id.present?
     end
 
     h

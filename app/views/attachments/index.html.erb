@@ -79,17 +79,21 @@
                     <% if attachment.image? %>
                       <dt>关联视频</dt>
                       <dd>
-                        <div class="btn-group btn-group-sm video-select">
+                        <div class="btn-group btn-group-sm video-select" style="width: 100%;">
                           <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <%= attachment.relate_video.blank? ? "----" : attachment.relate_video.content.file.filename %>
                             <span class="caret"></span>
                           </button>
-                          <ul class="dropdown-menu">
+                          <ul class="dropdown-menu video-list">
                             <% @user.videos.each do |video|%>
                               <li>
-                                <a href="javascript: void(0);" data-url="<%=relate_video_attachment_user_attachment_path(@user, attachment, video.id)%>">
-                                  <%=video.content.file.filename%>
-                                </a>
+                                <div class="">
+                                  <a href="javascript: void(0);" data-url="<%=relate_video_attachment_user_attachment_path(@user, attachment, video.id)%>">
+                                    <%= image_tag video.thumb_url, height: 150, alt: attachment.content.filename, class: "media-object" %>
+
+                                  </a>
+                                  <span><%= video.content.file.filename%></span>
+                                </div>
                               </li>
                             <%end%>
                           </ul>
@@ -185,7 +189,7 @@
                             <% @user.videos.each do |video| %>
                               <li>
                                 <a href="javascript: void(0);" data-url="<%= relate_video_attachment_user_attachment_path(@user, attachment, video.id) %>">
-                                  <%= video.content.file.filename %>
+                                  <% video.content.file.filename %>
                                 </a>
                               </li>
                             <% end %>
@@ -236,7 +240,6 @@
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
-
 
 <script>
     /*

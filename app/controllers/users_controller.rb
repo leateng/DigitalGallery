@@ -103,7 +103,7 @@ class UsersController < ApplicationController
 
   def upload_app
     @user = User.find(params[:id])
-    #binding.pry
+
     if @user.update_attribute(:app, params[:app])
       render json: @user.to_json, status: 200
     else

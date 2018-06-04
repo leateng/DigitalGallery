@@ -192,7 +192,7 @@ aside {
   }
 
   section {
-    padding: 10px, 0;
+    padding: 10px 0;
     margin-top: 20px;
     &:first-child {
       border: 0;
@@ -290,10 +290,6 @@ input {
     }
   }
 }
-.ajax-upload-dragdrop {
-  //width: 100% ;
-  //margin-top: 15px;
-}
 
 /* gallery */
 .w190{height:170px;}
@@ -341,5 +337,34 @@ input {
     background-color: white;
     padding: 10px;
     #border: 1px solid #CDCDCD;
+  }
+}
+
+/* bootstrap */
+ul.dropdown-menu.video-list {
+  max-height: 600px;
+  overflow-y: scroll;
+
+  a {
+    display: block;
+
+    img {
+      margin: 10px 5px;
+      //border: 1px solid gray;
+      -moz-box-shadow:2px 2px 5px #cdcdcd;
+      -webkit-box-shadow:2px 2px 5px #cdcdcd;
+      box-shadow:2px 2px 5px #cdcdcd;
+    }
+
+
+    &:hover {
+
+    }
+  }
+
+  span {
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
