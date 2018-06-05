@@ -2,7 +2,7 @@
 
 desc 'build apk for client'
 task :build_apk => [:environment] do
-  android_project_dir = "/Users/liteng/code/android/DigitalStudio2"
+  android_project_path = "/Users/liteng/code/android/DigitalStudio2"
   assets_dir = "#{android_project_dir}/app/src/main/assets"
   release_dir = "#{android_project_dir}/app/build/outputs/apk/release"
   helloar_path = "#{android_project_dir}/app/src/main/java/cn/moosao/digitalstudio/HelloAR.java"
