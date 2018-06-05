@@ -2,10 +2,10 @@
 
 desc 'build apk for client'
 task :build_apk => [:environment] do
-  android_project_path = "/Users/liteng/code/android/DigitalStudio2"
-  assets_dir = "#{android_project_dir}/app/src/main/assets"
-  release_dir = "#{android_project_dir}/app/build/outputs/apk/release"
-  helloar_path = "#{android_project_dir}/app/src/main/java/cn/moosao/digitalstudio/HelloAR.java"
+  android_project_path = ENV["ANDROID_PROJECT_PATH"]
+  assets_dir = "#{android_project_path}/app/src/main/assets"
+  release_dir = "#{android_project_path}/app/build/outputs/apk/release"
+  helloar_path = "#{android_project_path}/app/src/main/java/cn/moosao/digitalstudio/HelloAR.java"
 
   User.find_each do |user|
     targets = user.targets_json
