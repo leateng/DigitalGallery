@@ -31,20 +31,12 @@
           <% @user.images.order(id: :desc).each_with_index do |attachment, index| %>
             <tr>
               <td width="250px" style="text-align: center">
-                <%#= image_tag attachment.content.thumb.url, height: 150, alt: attachment.content.filename %>
-
-                <div class="border">
-                  <div class="frame">
-                    <div class="image" style="background-image: url(<%=attachment.content.thumb.url%>)"></div>
-                  </div>
-                </div>
-
                 <div class="imgWrap w190">
                   <div class="bg1"></div>
                   <div class="bg2"></div>
                   <div class="imgDiv">
                     <div>
-                      <a href="#"
+                      <a href="javascript:void(0);"
                          data-title="<%=attachment.content.file.filename%>"
                          data-url="<%=user_attachment_path(@user, attachment)%>"
                          data-order="<%=index%>"
@@ -132,20 +124,12 @@
           <% @user.videos.order(id: :desc).each_with_index do |attachment, index| %>
             <tr>
               <td width="250px" style="text-align: center">
-                <%#= image_tag attachment.content.thumb.url, height: 150, alt: attachment.content.filename %>
-
-                <div class="border">
-                  <div class="frame">
-                    <div class="image" style="background-image: url(<%=attachment.content.thumb.url%>)"></div>
-                  </div>
-                </div>
-
                 <div class="imgWrap w190">
                   <div class="bg1"></div>
                   <div class="bg2"></div>
                   <div class="imgDiv">
                     <div>
-                      <a href="#"
+                      <a href="javascript:void(0);"
                          data-title="<%= attachment.content.file.filename %>"
                          data-url="<%= user_attachment_path(@user, attachment) %>"
                          data-order="<%= index %>"
