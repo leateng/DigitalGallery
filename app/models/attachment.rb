@@ -60,6 +60,12 @@ class Attachment < ApplicationRecord
     content_type == "mp4"
   end
 
+  def meta_info_str
+    str = "#{self.meta_info[:width]}x#{self.meta_info[:height]} #{(self.meta_info[:size].to_f / 1024 / 1024).round(2)}M"
+    str += " #{self.meta_info[:duration].to_i}s" if self.video?
+    str
+  end
+
   def thumb_url
     if image?
       content.thumb.url

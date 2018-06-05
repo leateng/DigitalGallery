@@ -143,6 +143,12 @@ class UsersController < ApplicationController
     send_file f.path, filename: "#{@user.name}-image-pack.zip", type: "application/zip"
   end
 
+  def videos
+    @user = User.find(params[:id])
+    @videos = @user.videos.order(id: :desc)
+    render layout: false
+  end
+
   private
 
   def user_params

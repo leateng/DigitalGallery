@@ -1,0 +1,69 @@
+<ul class="photo-list">
+  <% attachments.each_with_index do |attachment, index| %>
+    <li>
+      <a href="javascript:void(0);"
+         data-title="<%= attachment.content.file.filename %>"
+         data-url="<%= user_attachment_path(@user, attachment) %>"
+         data-order="<%= index %>"
+         class="attachment-thumbnail">
+        <%= image_tag attachment.thumb_url, height: 150, alt: attachment.content.filename, class: "img-thumbnail" %>
+      </a>
+
+      <div class="info">
+        <h4 class="text-left">#<%= index + 1 %> <%= attachment.content.file.filename %></h4>
+        <ul class="info-list">
+          <li>
+            <span class="glyphicon glyphicon-user"></span>
+            <%= attachment.creator&.name %>
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-time"></span>
+            <%= attachment.created_at.to_s(:db) %>
+          </li>
+          <li>
+            <span class="glyphicon glyphicon-info-sign"></span>
+            <%= "#{attachment.meta_info_str}" %>
+          </li>
+
+          <% if attachment.image? %>
+          <li>
+            <span class="glyphicon glyphicon-facetime-video"></span>
+            <a href="javascript:void(0);"
+               data-user-id="<%= @user.id %>"
+               data-image-id="<%= attachment.id %>"
+               data-url="<%= videos_user_path(@user, {image_id: attachment.id}) %>"
+               class="select-video-btn <%=attachment.id%>">
+              <%= attachment.relate_video.blank? ? "----" : attachment.relate_video.content.file.filename %>
+            </a>
+          </li>
+          <% end %>
+
+          <%if params[:image_id].present?%>
+          <li>
+            <a href="javascript:void(0);"
+                 class="btn btn-success btn-sm video-select"
+                 data-title="<%=attachment.content.file.filename%>"
+                 data-url="<%=relate_video_attachment_user_attachment_path(@user, params[:image_id], attachment.id)%>">
+              选择
+            </a>
+          </li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="operation">
+        <%= link_to attachment.content.url,
+                    class: "btn btn-success btn-sm" do %>
+          <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+        <% end %>
+
+        <%= link_to user_attachment_path(@user, attachment),
+                    method: :delete,
+                    data: {confirm: '确定删除?'},
+                    class: "btn btn-danger btn-sm" do %>
+          <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        <% end %>
+      </div>
+    </li>
+  <% end %>
+</ul>

@@ -3,7 +3,7 @@
 <div class="row mt-20">
   <div class="col-md-4" >
     <div class="uploader">
-      <div id="fileuploader" ></div>
+      <div id="fileuploader"></div>
     </div>
   </div>
 
@@ -26,185 +26,11 @@
     <!-- Tab panes -->
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane fade in active" id="images">
-        <table class="table table-hover gallery">
-          <tbody>
-          <% @user.images.order(id: :desc).each_with_index do |attachment, index| %>
-            <tr>
-              <td width="250px" style="text-align: center">
-                <div class="imgWrap w190">
-                  <div class="bg1"></div>
-                  <div class="bg2"></div>
-                  <div class="imgDiv">
-                    <div>
-                      <a href="javascript:void(0);"
-                         data-title="<%=attachment.content.file.filename%>"
-                         data-url="<%=user_attachment_path(@user, attachment)%>"
-                         data-order="<%=index%>"
-                         class="attachment">
-                        <%= image_tag attachment.thumb_url, height: 150, alt: attachment.content.filename %>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div>
-                  <h5 class="text-left">#<%= index + 1 %> <%= attachment.content.file.filename %></h5>
-                  <dl class="dl-horizontal">
-                    <dt>上传时间</dt>
-                    <dd><%= attachment.created_at.to_s(:db) %></dd>
-
-                    <dt>上传人</dt>
-                    <dd><%= attachment.creator&.name %></dd>
-
-                    <dt>分辨率</dt>
-                    <dd><%= "#{attachment.meta_info[:width]}x#{attachment.meta_info[:height]}" %></dd>
-
-                    <dt>大小</dt>
-                    <dd><%= "#{(attachment.meta_info[:size].to_f / 1024 / 1024).round(2)} M" %></dd>
-
-                    <% if attachment.video? %>
-                      <dt>时长</dt>
-                      <dd><%= "#{attachment.meta_info[:duration].to_i} s" %></dd>
-                    <% end %>
-
-                    <% if attachment.image? %>
-                      <dt>关联视频</dt>
-                      <dd>
-                        <div class="btn-group btn-group-sm video-select" style="width: 100%;">
-                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= attachment.relate_video.blank? ? "----" : attachment.relate_video.content.file.filename %>
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu video-list">
-                            <% @user.videos.each do |video|%>
-                              <li>
-                                <div class="">
-                                  <a href="javascript: void(0);" data-url="<%=relate_video_attachment_user_attachment_path(@user, attachment, video.id)%>">
-                                    <%= image_tag video.thumb_url, height: 150, alt: attachment.content.filename, class: "media-object" %>
-
-                                  </a>
-                                  <span><%= video.content.file.filename%></span>
-                                </div>
-                              </li>
-                            <%end%>
-                          </ul>
-                        </div>
-                      </dd>
-                    <% end %>
-                  </dl>
-
-                  <div class="pull-right" style="margin-top: -14px;">
-                    <%= link_to attachment.content.url,
-                                class: "btn btn-default btn-sm",
-                                title: "下载",
-                                data: {toggle: "tooltip", placement: "top"} do %>
-                      <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                    <% end %>
-
-                    <%= link_to user_attachment_path(@user, attachment),
-                                method: :delete,
-                                data: {confirm: '确定删除?', toggle: "tooltip", placement: "top"},
-                                title: "删除",
-                                class: "btn btn-danger btn-sm" do %>
-                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    <% end %>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+        <%= render partial: "preview_list", locals: {attachments: @user.images.order(id: :desc)}%>
       </div>
 
       <div role="tabpanel" class="tab-pane fade" id="videos">
-        <table class="table table-hover gallery">
-          <tbody>
-          <% @user.videos.order(id: :desc).each_with_index do |attachment, index| %>
-            <tr>
-              <td width="250px" style="text-align: center">
-                <div class="imgWrap w190">
-                  <div class="bg1"></div>
-                  <div class="bg2"></div>
-                  <div class="imgDiv">
-                    <div>
-                      <a href="javascript:void(0);"
-                         data-title="<%= attachment.content.file.filename %>"
-                         data-url="<%= user_attachment_path(@user, attachment) %>"
-                         data-order="<%= index %>"
-                         class="attachment">
-                        <%= image_tag attachment.thumb_url, height: 150, alt: attachment.content.filename %>
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>
-                <div>
-                  <h5 class="text-left">#<%= index + 1 %> <%= attachment.content.file.filename %></h5>
-                  <dl class="dl-horizontal">
-                    <dt>上传时间</dt>
-                    <dd><%= attachment.created_at.to_s(:db) %></dd>
-
-                    <dt>上传人</dt>
-                    <dd><%= attachment.creator&.name %></dd>
-
-                    <dt>分辨率</dt>
-                    <dd><%= "#{attachment.meta_info[:width]}x#{attachment.meta_info[:height]}" %></dd>
-
-                    <dt>大小</dt>
-                    <dd><%= "#{(attachment.meta_info[:size].to_f / 1024 / 1024).round(2)} M" %></dd>
-
-                    <% if attachment.video? %>
-                      <dt>时长</dt>
-                      <dd><%= "#{attachment.meta_info[:duration].to_i} s" %></dd>
-                    <% end %>
-
-                    <% if attachment.image? %>
-                      <dt>关联视频</dt>
-                      <dd>
-                        <div class="btn-group btn-group-sm video-select">
-                          <button type="button" class="btn btn-default btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <%= attachment.relate_video.blank? ? "----" : attachment.relate_video.content.file.filename %>
-                            <span class="caret"></span>
-                          </button>
-                          <ul class="dropdown-menu">
-                            <% @user.videos.each do |video| %>
-                              <li>
-                                <a href="javascript: void(0);" data-url="<%= relate_video_attachment_user_attachment_path(@user, attachment, video.id) %>">
-                                  <% video.content.file.filename %>
-                                </a>
-                              </li>
-                            <% end %>
-                          </ul>
-                        </div>
-                      </dd>
-                    <% end %>
-                  </dl>
-
-                  <div class="pull-right" style="margin-top: -14px;">
-                    <%= link_to attachment.content.url,
-                                class: "btn btn-default btn-sm",
-                                title: "下载",
-                                data: {toggle: "tooltip", placement: "top"} do %>
-                      <span class="glyphicon glyphicon-download" aria-hidden="true"></span>
-                    <% end %>
-
-                    <%= link_to user_attachment_path(@user, attachment),
-                                method: :delete,
-                                data: {confirm: '确定删除?', toggle: "tooltip", placement: "top"},
-                                title: "删除",
-                                class: "btn btn-danger btn-sm" do %>
-                      <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-                    <% end %>
-                  </div>
-                </div>
-              </td>
-            </tr>
-          <% end %>
-          </tbody>
-        </table>
+        <%= render partial: "preview_list", locals: {attachments: @user.videos.order(id: :desc)}%>
       </div>
     </div>
   </div>
@@ -225,89 +51,21 @@
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<script>
-    /*
-        var s = $.extend({
-                   // These are the defaults.
-                   url: "",
-                   method: "POST",
-                   enctype: "multipart/form-data",
-                   returnType: null,
-                   allowDuplicates: true,
-                   duplicateStrict: false,
-                   allowedTypes: "*",
-                   //For list of acceptFiles
-                   // http://stackoverflow.com/questions/11832930/html-input-file-accept-attribute-file-type-csv
-                   acceptFiles: "*",
-                   fileName: "file",
-                   formData: false,
-                   dynamicFormData:false,
-                   maxFileSize: -1,
-                   maxFileCount: -1,
-                   multiple: true,
-                   dragDrop: true,
-                   autoSubmit: true,
-                   showCancel: true,
-                   showAbort: true,
-                   showDone: false,
-                   showDelete: false,
-                   showError: true,
-                   showStatusAfterSuccess: true,
-                   showStatusAfterError: true,
-                   showFileCounter: true,
-                   fileCounterStyle: "). ",
-                   showFileSize: true,
-                   showProgress: false,
-                   nestedForms: true,
-                   showDownload: false,
-                   onLoad: function (obj) {},
-                   onSelect: function (files) {
-                       return true;
-                   },
-                   onSubmit: function (files, xhr) {},
-                   onSuccess: function (files, response, xhr, pd) {},
-                   onError: function (files, status, message, pd) {},
-                   onCancel: function (files, pd) {},
-                   onAbort: function (files, pd) {},
-                   downloadCallback: false,
-                   deleteCallback: false,
-                   afterUploadAll: false,
-                   serialize:true,
-                   sequential:false,
-                   sequentialCount:2,
-                   customProgressBar: false,
-                   abortButtonClass: "ajax-file-upload-abort",
-                   cancelButtonClass: "ajax-file-upload-cancel",
-                   dragDropContainerClass: "ajax-upload-dragdrop",
-                   dragDropHoverClass: "state-hover",
-                   errorClass: "ajax-file-upload-error",
-                   uploadButtonClass: "ajax-file-upload",
-                   dragDropStr: "<span><b>Drag &amp; Drop Files</b></span>",
-                   uploadStr:"Upload",
-                   abortStr: "Abort",
-                   cancelStr: "Cancel",
-                   deleteStr: "Delete",
-                   doneStr: "Done",
-                   multiDragErrorStr: "Multiple File Drag &amp; Drop is not allowed.",
-                   extErrorStr: "is not allowed. Allowed extensions: ",
-                   duplicateErrorStr: "is not allowed. File already exists.",
-                   sizeErrorStr: "is not allowed. Allowed Max size: ",
-                   uploadErrorStr: "Upload is not allowed",
-                   maxFileCountErrorStr: " is not allowed. Maximum allowed files are:",
-                   downloadStr: "Download",
-                   customErrorKeyStr: "jquery-upload-file-error",
-                   showQueueDiv: false,
-                   statusBarWidth: 400,
-                   dragdropWidth: 400,
-                   showPreview: false,
-                   previewHeight: "auto",
-                   previewWidth: "100%",
-                   extraHTML:false,
-                   uploadQueueOrder:'top',
-                   headers: {}
-               }, options);
-        */
+<div id="video-list-dialog" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Video List</h4>
+      </div>
+      <div class="modal-body" style="height: 700px; overflow: scroll;">
+        <p>loading....</p>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
+<script>
     $(function(){
         // 上传附件
         $("#fileuploader").uploadFile({
@@ -324,20 +82,5 @@
             maxFileSize: 10 * 1024 * 1024, //10M
             sizeErrorStr: "文件过大，上传文件最大: ",
         });
-
-        // 更新照片关联的视频
-        $(".video-select a").on("click", function(e){
-            var $link = $(this);
-            var url = $(this).data("url");
-            var jqxhr = $.post(url, function (resp) {
-                $link.parent().parent().parent().children(".btn").html(resp['video_title'] + '<span class="caret"></span>' );
-                toastr.success(resp["message"]);
-            })
-              .fail(function (resp) {
-                  toastr.error(resp["message"] || "更新失败");
-              });
-        });
     });
-
-
 </script>

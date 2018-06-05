@@ -1,7 +1,7 @@
 $(document).ready(function(){
     var current_attachment_order;
 
-    $(".attachment").on("click", function (e) {
+    $(".attachment-thumbnail").on("click", function (e) {
         $("#attachment-dialog .modal-body").load($(this).data("url"));
         $("#attachment-dialog .modal-title").text($(this).data("title"));
         $("#attachment-dialog").modal('show');
@@ -43,4 +43,8 @@ $(document).ready(function(){
         }
     }
 
+    $(".select-video-btn").on("click", function (e) {
+        $("#video-list-dialog .modal-body").load($(this).data("url"));
+        $("#video-list-dialog").modal('show');
+    });
 });

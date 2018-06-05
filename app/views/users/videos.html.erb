@@ -1,0 +1,22 @@
+<%= render partial: "/attachments/preview_list", locals: {attachments: @videos}%>
+
+<script type="text/javascript" charset="utf-8">
+  $(document).ready(function () {
+      // 更新照片关联的视频
+      $("a.video-select").on("click", function (e) {
+          var $link = $(this);
+          var url = $(this).data("url");
+          var jqxhr = $.post(url, function (resp) {
+              $link.parent().parent().parent().children(".btn").html(resp['video_title'] + '<span class="caret"></span>');
+              toastr.success(resp["message"]);
+          })
+              .fail(function (resp) {
+                  toastr.error(resp["message"] || "更新失败");
+              });
+
+          var image_id = "<%=params[:image_id]%>";
+          $(".select-video-btn" + "." + image_id).text($link.data("title"));
+          $("#video-list-dialog").modal('toggle');
+      });
+  })
+</script>

@@ -19,6 +19,7 @@ Rails.application.routes.draw do
       post :app, action: "upload_app"
       get :app, action: "download_app"
       get :assets_bundle
+      get :videos
     end
 
     resources :attachments, constraints: { id: /\d+/ } do

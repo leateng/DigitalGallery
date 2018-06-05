@@ -1,3 +1,74 @@
 // Place all the styles related to the Attachments controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+ul.photo-list {
+  padding: 0;
+
+  >li {
+    height: 210px;
+    list-style: none;
+    padding: 10px 5px;
+    position: relative;
+
+    &:hover {
+      background-color: #eeeeee;
+
+      .operation {
+        display: block;
+      }
+    }
+
+    .attachment-thumbnail {
+      position: absolute;
+    }
+
+    .img-thumbnail {
+      width: 250px;
+    }
+
+    +li{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      border-top: 1px solid #dddddd;
+    }
+
+    >div {
+      margin-left: 260px;
+    }
+
+    .operation {
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      display: none;
+
+      a {
+        box-sizing: border-box;
+        padding: 5px;
+        width: 30px;
+        height: 30px;
+        border-radius: 15px;
+        font-weight: bold;
+      }
+    }
+  }
+}
+
+ul.info-list {
+  padding: 0;
+  color: #666;
+  font-weight: bold;
+  font-family: Sans-Serif;
+
+  >li {
+    list-style: none;
+    min-height: 20px;
+  }
+}
+
+#video-list-dialog {
+  .operation {
+    display: none;
+  }
+}
