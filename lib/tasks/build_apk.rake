@@ -13,8 +13,9 @@ task :build_apk => [:environment] do
     puts user.name
 
     # clean assets dir
-    system("rm #{assets_dir}/*")
-    system("rm #{release_dir}/*") if File.exist?(release_dir)
+    system("rm #{assets_dir}/*.jpg")
+    system("rm #{assets_dir}/*.mp4")
+    system("rm #{release_dir}/*.apk") if File.exist?(release_dir)
 
     # copy new assets
     user.images.each_with_index do |image, index|
@@ -28,7 +29,7 @@ task :build_apk => [:environment] do
     File.open("#{assets_dir}/targets.json", "w+"){ |f| f.write user.targets_json.to_json }
 
     # build release apk
-    Dir.chdir(android_project_dir)
+    Dir.chdir(android_project_path)
     system("gradle build")
 
     # replace code `int imageSize = 0`
