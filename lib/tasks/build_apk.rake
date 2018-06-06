@@ -20,8 +20,8 @@ task :build_apk => [:environment] do
     # copy new assets
     user.images.each_with_index do |image, index|
       if image.video_id.present?
-        system("copy #{image.content.path} #{assets_dir}/#{index}.jpg")
-        system("copy #{image.relate_video.content.path} #{assets_dir}/#{index}.mp4")
+        system("cp #{image.content.path} #{assets_dir}/#{index}.jpg")
+        system("cp #{image.relate_video.content.path} #{assets_dir}/#{index}.mp4")
       end
     end
 
@@ -41,7 +41,6 @@ task :build_apk => [:environment] do
     if File.exist?("#{release_dir}/app-release.apk")
       File.open("#{release_dir}/app-release.apk", "rb") do |f|
         user.update_attribute(:app, f)
-        user.save!
       end
     end
   end
