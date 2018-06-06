@@ -119,7 +119,7 @@ class UsersController < ApplicationController
       render  "errors/404", status: 404
     else
       response.headers['Content-Length'] = @user.app.size.to_s
-      send_file @user.app.path, filename: "prettybaby.apk", content_type: "application/vnd.android.package-archive", x_sendfile: true
+      send_file @user.app.path, filename: "meibaomosao.apk", content_type: "application/vnd.android.package-archive", x_sendfile: true
     end
   end
 
