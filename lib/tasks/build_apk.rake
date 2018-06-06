@@ -40,8 +40,8 @@ task :build_apk => [:environment] do
     # upload apk to user
     if File.exist?("#{release_dir}/app-release.apk")
       File.open("#{release_dir}/app-release.apk", "rb") do |f|
-        user.app = f
-        user.save
+        user.update_attribute(app: f)
+        user.save!
       end
     end
   end
