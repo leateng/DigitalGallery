@@ -15,7 +15,7 @@
         <th>#</th>
         <th>头像</th>
         <th>姓名</th>
-        <%if current_user.admin? %><th>密码</th><%end%>
+        <th>密码</th>
         <th>订单号</th>
         <th>照片数</th>
         <th>视频数</th>
@@ -31,7 +31,7 @@
           <td><%= index + 1 %></td>
           <td><%= link_to gravatar_for(user), user_path(user) %></td>
           <td><%= user.name %></td>
-          <%if current_user.admin? %><td><%= user.password_text %></td><%end%>
+          <td><%= user.password_text %></td>
           <td><%= user.order_id %></td>
           <td><%= user.images.count %></td>
           <td><%= user.videos.count %></td>
