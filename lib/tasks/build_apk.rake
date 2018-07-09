@@ -8,7 +8,7 @@ task :build_apk => [:environment] do
   release_dir = "#{android_project_path}/app/build/outputs/apk/release"
   helloar_path = "#{android_project_path}/app/src/main/java/cn/moosao/digitalstudio/HelloAR.java"
 
-  User.find_each do |user|
+  User.clients.find_each do |user|
     targets = user.targets_json
     next if targets["images"].size == 0
     puts user.name
