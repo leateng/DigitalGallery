@@ -4,6 +4,7 @@ desc 'build apk for client'
 task :build_apk => [:environment] do
   android_project_path = ENV["ANDROID_PROJECT_PATH"]
   assets_dir = "#{android_project_path}/app/src/main/assets"
+  raw_dir = "#{android_project_path}/app/src/main/res/raw"
   release_dir = "#{android_project_path}/app/build/outputs/apk/release"
   helloar_path = "#{android_project_path}/app/src/main/java/cn/moosao/digitalstudio/HelloAR.java"
 
@@ -14,14 +15,14 @@ task :build_apk => [:environment] do
 
     # clean assets dir
     system("rm #{assets_dir}/*.jpg")
-    system("rm #{assets_dir}/*.mp4")
+    system("rm #{raw_dir}/*.mp4")
     system("rm #{release_dir}/*.apk") if File.exist?(release_dir)
 
     # copy new assets
     user.images.each_with_index do |image, index|
       if image.video_id.present?
         system("cp #{image.content.path} #{assets_dir}/#{index}.jpg")
-        system("cp #{image.relate_video.content.path} #{assets_dir}/#{index}.mp4")
+        system("cp #{image.relate_video.content.path} #{raw_dir}/video#{index}.mp4")
       end
     end
 
