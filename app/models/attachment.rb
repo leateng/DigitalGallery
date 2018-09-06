@@ -103,7 +103,7 @@ class Attachment < ApplicationRecord
   end
 
   def has_video?
-    self.video_id.present? && self.class.find_by_video_id(video_id).present?
+    self.video_id.present? && self.class.find_by_id(self.video_id).present?
   end
 
   def video

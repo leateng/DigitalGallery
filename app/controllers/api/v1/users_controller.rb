@@ -1,5 +1,5 @@
 class Api::V1::UsersController < Api::V1::BaseController
-  before_action :authenticate_user!, only: [:show, :update, :images]
+  before_action :authenticate_user!, only: [:show, :update, :images, :ar_images]
 
   def show
     @user = User.find(params[:id])
