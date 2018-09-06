@@ -14,6 +14,10 @@ class Api::V1::UsersController < Api::V1::BaseController
     @images = current_user.images
   end
 
+  def ar_images
+    @images = current_user.images.select{|i| i.has_video?}
+  end
+
   private
 
   def update_params

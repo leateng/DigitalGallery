@@ -101,4 +101,12 @@ class Attachment < ApplicationRecord
   def relate_video
     self.class.where(id: video_id).first
   end
+
+  def has_video?
+    self.video_id.present? && self.class.find_by_video_id(video_id).present?
+  end
+
+  def video
+    Attachment.find(self.video_id) if has_video?
+  end
 end

@@ -37,6 +37,7 @@ Rails.application.routes.draw do
       resources :users, only: [:index, :create, :show, :update, :destroy] do
         member do
           get :images
+          get :ar_images
         end
       end
       # 原文有 microposts, 我们现在把它注释掉
