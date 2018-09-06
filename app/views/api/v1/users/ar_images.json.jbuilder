@@ -7,6 +7,7 @@ json.array! @images do |image|
   json.meta_info image.meta_info
   json.created_at image.created_at
 
+  json.video_id image.video.id
   json.video_name image.video.content.file.filename
   json.video_thumb_url(ENV['API_HOST'] + image.video.thumb_url)
   json.video_url(ENV['API_HOST'] + image.video.content.url)
